@@ -1,26 +1,50 @@
 
 
-
 import wx
 import os
 
 class MainFrame(wx.Frame):
     panel = None
-    def CreateStatic(self, _text, _pos):
-       return wx.StaticText(self.panel, -1, _text, pos=_pos)
+    WIDGET_H = 3
 
-    def CreateText(self, _pos):
-        return wx.TextCtrl(self.panel, -1, "", _pos)
+    FIX_STATIC_H = 2
+    
+    TEXT_H = 22
+    TEXT_W = 7
 
-    def CreateButton(self, _text, _pos, _cbk):
-        button = wx.Button(self.panel, -1, _text, pos=_pos)
-        self.Bind(wx.EVT_BUTTON, _cbk, button)
+    CURRENT_X = 0
+
+    def __GET_POS(self, _x, _w):
+        if (_x < 0):
+            _x = self.CURRENT_X - _x
+        self.CURRENT_X = _x + _w
+        return _x
+    
+    def CreateStatic(self, _text, _x, _y):
+        _x = self.__GET_POS(_x, len(_text))
+        wdt = wx.StaticText(self.panel, -1, _text, pos=(self.TEXT_W*_x, (self.TEXT_H+self.WIDGET_H)*_y + self.WIDGET_H + self.FIX_STATIC_H))
+        return wdt
+
+    def CreateText(self, _x, _y, _w):
+        _x = self.__GET_POS(_x, _w)
+        wdt = wx.TextCtrl(self.panel, -1, "", pos=(self.TEXT_W*_x, (self.TEXT_H+self.WIDGET_H)*_y + self.WIDGET_H), size=(self.TEXT_W*_w, self.TEXT_H))
+        return wdt
+
+    def CreateButton(self, _text, _x, _y, _w, _cbk):
+        _x = self.__GET_POS(_x, _w)
+        wdt = wx.Button(self.panel, -1, _text, pos=(self.TEXT_W*_x, (self.TEXT_H+self.WIDGET_H)*_y + self.WIDGET_H), size=(self.TEXT_W*_w, self.TEXT_H))
+        self.Bind(wx.EVT_BUTTON, _cbk, wdt)
+        return wdt
         
-    def CreateCombo(self, _pos, _list):
-        return wx.Choice(self.panel, -1, _pos, choices=_list)
+    def CreateCombo(self, _x, _y, _list):
+        _x = self.__GET_POS(_x, len(_list[0])+3)
+        wdt = wx.Choice(self.panel, -1, pos=(self.TEXT_W*_x, (self.TEXT_H+self.WIDGET_H)*_y + self.WIDGET_H), choices=_list)
+        return wdt
 
-    def CreateGauge(self, _pos, _size, _range):
-        return wx.Gauge(self.panel, -1, _range, _pos, _size)
+    def CreateGauge(self, _x, _y, _w):
+        _x = self.__GET_POS(_x, _w)
+        wdt = wx.Gauge(self.panel, -1, 100, pos=(self.TEXT_W*_x, (self.TEXT_H+self.WIDGET_H)*_y + self.WIDGET_H))
+        return wdt
 
     def DoFileDialog(self):
         wildcard = "All files (*.*)|*.*"
@@ -51,3 +75,4 @@ class MainApp(wx.App):
         
     def OnInit(self):
         return True
+
