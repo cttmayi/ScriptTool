@@ -1,31 +1,56 @@
 import ConfigParser
-from MainFrame import *
+import os
+import subprocess
+#import subprocess.Popen
 
-class App(MainApp):
+
+from mainFrame import mainFrame
+from mainFrame import mainApp
+
+class App(mainApp):
 
     def OnInit(self):
-        config = ConfigParser.ConfigParser()
-        config.readfp(open('cfg.ini'))
+        #config = ConfigParser.ConfigParser()
+        #config.readfp(open('cfg.ini'))
         
-        self._Frame = MainFrame((540,200))
-        self._Frame.CreateStatic("Name", 0, 0)
-        self._Frame.CreateButton("Check",30, 0, 10, self.OnClick)
-        self._Name = self._Frame.CreateText(6, 0, 20)
-        self._Frame.CreateStatic("Age", 0, 1)
-        self._Frame.CreateButton("Cfg Write",30, 1, 10, self.OnCfgWrite)
-        self._Sel = self._Frame.CreateCombo(-1, 0, ["COM1","B"])
-        self._Sel.SetSelection(int(config.get("Main","COM")))
-        self._Gauge = self._Frame.CreateGauge(0, 2, 20)
+        self.mFrame = mainFrame("Demo", (540,200))
+        self.mFrame.createStatic("Name", 0, 0)
+        self.mFrame.createButton("Check",30, 0, 10, self.OnClick)
+        self.mName = self.mFrame.createText(6, 0, 20)
+        self.mFrame.createStatic("Age", 0, 1)
+        self.mFrame.createButton("Cfg Write",30, 1, 10, self.OnCfgWrite)
+        self._Sel = self.mFrame.createCombo(-1, 0, ["COM1","B"])
+        #self._Sel.SetSelection(int(config.get("Main","COM")))
+        self._Gauge = self.mFrame.createGauge(0, 2, 20)
         self._Gauge.SetValue(20)
-
-        self._Frame.Show()
+        
+        item = [
+                ["M", self.OnSimple, "S"],
+                ["1", self.OnSimple, "2"]
+                ]
+        
+        self.mFrame.createMenu("M",item);
+        self.mFrame.createMenu("MS",item);
+        self.mFrame.Show()
+        
+        
+        
         return True
 
+    def OnSimple(self, event):
+        print "You selected the simple menu item"
+        #os.popen("ping 127.0.0.1 -n 10")
+        #os.spawnv(os.P_NOWAIT, 'ping', None)
+        #pid = Popen(["ping", "127.0.0.1 -n 10"]).pid
+        #print subprocess.call(["dir", ""], shell=True)
+        self.mFrame.runCmdCbk("ping 127.0.0.1 -n 10", None, self.OnCmdCbk)
+
+
     def OnClick(self, event):
-        #data = self._Frame.DoFileDialog()
-        #self._Name.SetValue(self._Name.GetValue() + "NAME")
+        #data = self.mFrame.DoFileDialog()
+        #self.mName.SetValue(self.mName.GetValue() + "NAME")
         data = self._Sel.GetSelection()
-        self._Name.SetValue(str(data))
+        self.mName.SetValue(str(data))
         self._Gauge.SetValue(data*100)
         return
 
@@ -38,6 +63,11 @@ class App(MainApp):
 
         config.write(open('cfg.ini', "w"))
 
+
+    def OnCmdCbk(self, event):
+        #self.panel.SetTitle("Click Count: %s" % event.GetClickCount())
+        print event.getString(),
+        pass
 #    def OnIdle(self, event):
 #        self._Count = self._Count + 1
 #        print self._Count
@@ -45,6 +75,7 @@ class App(MainApp):
         
 
 if __name__ == '__main__':
+    #app = App(redirect=True,filename="mylogfile.txt")
     app = App()
     app.MainLoop()
 
