@@ -170,6 +170,8 @@ class mainFrame(wx.Frame):
         self.Bind(EVT_CUSTOMER, self.onCustomerEvent, self.panel)
         
         
+        self.panel.Layout()
+        self.panel.Refresh()
         self.Layout()
         self.Refresh()
         self.Show()
@@ -226,9 +228,10 @@ class mainFrame(wx.Frame):
         sel = self.tabFrames[name]
         self.notebook.SetSelection(sel)
 
-    def doFileDialog(self, defaultPath = None):
-        wildcard = "All files (*.*)|*.*"
-        path = ""
+    def doFileDialog(self, defaultPath = None, filefilter = '*.*'):
+        #wildcard = "All files (*.*)|*.*"
+        wildcard = "files (*." + filefilter + ")|*." + filefilter
+        path = None
         
         dialog = wx.FileDialog(None, "Choose a file", os.getcwd(), "", wildcard, wx.OPEN)
         if defaultPath != None :
@@ -240,7 +243,7 @@ class mainFrame(wx.Frame):
         return path
     
     def doDirDialog(self, defaultPath = None):
-        path = ""
+        path = None
         dialog = wx.DirDialog(None, "Choose a directory:",
                               style = wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         

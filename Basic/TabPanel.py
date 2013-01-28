@@ -57,6 +57,6 @@ class tabPanel(Basic.Panel.panel):
         pass
     
     def onDestroy(self):
-        print 'onDestroy'
+        #print 'onDestroy'
         pass
     

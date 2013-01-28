@@ -19,6 +19,7 @@ class tabFrame(tabPanel):
         self.createButton("Dialog", 8, -1, 15, self.onClickDialog)
         self.createButton("Log", 8, -1, 15, self.onClickLog)
         self.createButton('Tree',8, -1, 15, self.onClickTree)
+        self.createButton('DirDialog',8, -1, 15, self.onFileDialog)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -104,11 +105,10 @@ class tabFrame(tabPanel):
         self.setCfg('A', 'b')
         
         
-        #dist = {}
-        #dist['A'] = 'A'
-        #print dist['A']
-        
         #ce = self.createComboEdit(300, 10, 20, ['A', 'B'])
+        
+        self.setFramePosition(400)
+        
         
         return
 
@@ -218,6 +218,9 @@ class tabFrame(tabPanel):
         a = util.dir2tree('D:\\test')
         a.show()
         self.tree.setTree(self.tree.root, a, True)
+    
+    def onFileDialog(self):
+        print self.frame.doFileDialog('C:\\', '*')
     
     def onClickDialog(self):
         dlg = self.createDialog('Title', 20)
