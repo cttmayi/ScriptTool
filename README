@@ -1,1 +1,13 @@
-it's script tool using python
+使用Python编写的工具架构
+
+
+运行环境:
+python 2.7.3
+wxpython 2.7 for py27
+xlwt-0.7.4
+
+编译环境
+pywin32-218 for py27
+pyinstaller 2.0
+
+
