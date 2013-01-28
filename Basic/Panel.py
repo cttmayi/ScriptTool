@@ -15,24 +15,21 @@ from Basic.ComboEdit import comboEdit
 from Basic.Dialog import dialog
 from Basic.Tab import tab
 
+"""class panel
+"""
+
 
 class panel(wx.ScrolledWindow):
     
-    WIDGET_H = 3
+    __WIDGET_H = 3
 
-    FIX_STATIC_H = 2
+    __FIX_STATIC_H = 2
     
-    TEXT_H = 22
-    TEXT_W = 7
+    __TEXT_H = 22
+    __TEXT_W = 7
 
-    CURRENT_X = 0
-    CURRENT_Y = 0
-    
-    frame = None
-    output = None
-    status = None
-    output_style = True
-    
+    __CURRENT_X = 0
+    __CURRENT_Y = 0
     
 
     def __init__(self, parent, frame):
@@ -50,33 +47,33 @@ class panel(wx.ScrolledWindow):
             self.frame.config.add_section(self.cfg_sel)
             self.frame.config.write(open(self.frame.cfg_name, "w"))
             
-        self.Bind(wx.EVT_CONTEXT_MENU, self.onRClickAction)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.__onRClickAction)
         
 
 
 
-    def __GET_POS(self, _x, _w):
-        if (_x < 0):
-            _x = self.CURRENT_X + 1
-        self.CURRENT_X = _x + _w
-        return _x
+    def __GET_POS(self, x, w):
+        if (x < 0):
+            x = self.__CURRENT_X + 1
+        self.__CURRENT_X = x + w
+        return x
     
-    def __GET_POS_Y(self, _y, _h):
-        if (_y < 0):
-            _y = self.CURRENT_Y
-        self.CURRENT_Y = _y + _h
-        return _y
+    def __GET_POS_Y(self, y, h):
+        if (y < 0):
+            y = self.__CURRENT_Y
+        self.__CURRENT_Y = y + h
+        return y
     
-    def __GET_POS_SIZE(self, _x, _y, _w, _h):
-        _x = self.TEXT_W * _x
-        _y = (self.TEXT_H + self.WIDGET_H) * _y  + self.WIDGET_H
-        _w = self.TEXT_W * _w
-        _h = self.TEXT_H * _h
-        return [_x, _y, _w, _h]
+    def __GET_POS_SIZE(self, x, y, w, h):
+        x = self.__TEXT_W * x
+        y = (self.__TEXT_H + self.__WIDGET_H) * y  + self.__WIDGET_H
+        w = self.__TEXT_W * w
+        h = self.__TEXT_H * h
+        return [x, y, w, h]
     
-    def __GET_WIDTH(self, _w):
-        _w = math.floor(_w / self.TEXT_W)
-        return _w
+    def __GET_WIDTH(self, w):
+        w = math.floor(w / self.__TEXT_W)
+        return w
     
     def __GET_MAX(self, x, y, w, h):
         if self.maxWidth < x + w:
@@ -86,20 +83,27 @@ class panel(wx.ScrolledWindow):
     
     
     def printW(self, text):
+        """print word in message window"""
         self.frame.printW(text)
     
     def printL(self, text):
+        """print line in message window"""
         self.frame.printL(text)
     
 
     def log(self, datas):
+        """print log in log window"""
         self.frame.log(datas)
 
         
     def clrPrint(self):
+        """clear message window
+        """
         self.frame.clrPrint()
     
     def printStatus(self, text):
+        """print message in Status Bar
+        """
         self.frame.printStatus(text)
 
 
@@ -110,133 +114,138 @@ class panel(wx.ScrolledWindow):
 #        self.frame.setOutputColor(color) 
   
     
-    def createStatic(self, _text, _x, _y, _w = 0):
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        spos = self.__GET_POS_SIZE(_x, _y, _w, _h)
+    def createStatic(self, _text, x, y, w = 0):
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        spos = self.__GET_POS_SIZE(x, y, w, h)
 
         wdt = wx.StaticText(self, -1, _text, pos=(spos[0], spos[1]))
-        if (_w == 0):
+        if (w == 0):
             size = wdt.GetSize()
-            _w = self.__GET_WIDTH(size[0])
-            _x = self.__GET_POS(_x, _w)
+            w = self.__GET_WIDTH(size[0])
+            x = self.__GET_POS(x, w)
         return wdt
     
-    def createEdit(self, _x, _y, _w, _h = 1, tid = 0):
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
+    def createEdit(self, x, y, w, h = 1, tid = 0):
+        """create edit text in Panel
+        createEdit -> Basic.Edit.edit
+        """
         
-        if (_h == 1):
+    
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        
+        if (h == 1):
             style = wx.TR_DEFAULT_STYLE
         else:
             style = wx.TR_DEFAULT_STYLE | wx.TE_MULTILINE
         
         #style = style | wx.TE_PROCESS_ENTER
         
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
                 
-        wdt = edit(self, (_x, _y), (_w, _h), style, tid)
+        wdt = edit(self, (x, y), (w, h), style, tid)
         
         return wdt
 
-    def createButton(self, _text, _x, _y, _w, _cbk, _id = 0):
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createButton(self, _text, x, y, w, _cbk, _id = 0):
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        wdt = button(self, _text, (_x, _y), (_w, _h), _cbk, _id)
+        wdt = button(self, _text, (x, y), (w, h), _cbk, _id)
         return wdt
         
-    def createCombo(self, _x, _y, _list, edit = False):
-        _w = len(_list[0])+3
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createCombo(self, x, y, _list, edit = False):
+        w = len(_list[0])+3
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
         #style = wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER
         
-        wdt = combo(self, (_x, _y), _list)
+        wdt = combo(self, (x, y), _list)
         return wdt
 
-    def createComboEdit(self, _x, _y, _w, _list = []):
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createComboEdit(self, x, y, w, _list = []):
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        wdt = comboEdit(self, (_x, _y), (_w, _h), _list)
+        wdt = comboEdit(self, (x, y), (w, h), _list)
         return wdt
 
-    def createGauge(self, _x, _y, _w):
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createGauge(self, x, y, w):
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        wdt = wx.Gauge(self, -1, 100, pos=(_x, _y))
+        wdt = wx.Gauge(self, -1, 100, pos=(x, y))
         return wdt
     
-    def createTree(self, _x, _y, _w, _h):
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createTree(self, x, y, w, h):
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
         _tree = tree(self)
-        _tree.SetDimensions(_x, _y, _w, _h)
+        _tree.SetDimensions(x, y, w, h)
         
         return _tree
         
-    def createTable(self, _x, _y, _w, _h, columns):
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createTable(self, x, y, w, h, columns):
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        _table = table(self, pos = [_x, _y], size = [_w, _h])
+        _table = table(self, pos = [x, y], size = [w, h])
         for i in range(len(columns)):
             _table.InsertColumn(i, columns[i])
         return _table
 
-    def createCheckbox(self, _x, _y, _w, names, col=1):
-        _h = math.floor(len(names)/col)
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createCheckbox(self, x, y, w, names, col=1):
+        h = math.floor(len(names)/col)
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        cb = checkboxs(self, names, (_x, _y),(_w, _h), col)
+        cb = checkboxs(self, names, (x, y),(w, h), col)
         return cb
 
-    def createRadiobox(self, _x, _y, name, slist):
-        _w = 1
-        _h = 1
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        rpos = self.__GET_POS_SIZE(_x, _y, _w, _h)
+    def createRadiobox(self, x, y, name, slist):
+        w = 1
+        h = 1
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        rpos = self.__GET_POS_SIZE(x, y, w, h)
         
         rb = radiobox(self, name, slist, (rpos[0], rpos[1]))
         size = rb.GetSize()
-        _w = self.__GET_WIDTH(size[0])
-        _x = self.__GET_POS(_x, _w)
+        w = self.__GET_WIDTH(size[0])
+        x = self.__GET_POS(x, w)
         return rb
 
 
-    def createBitmap(self, _x, _y, _w = 0, _h = 0):
-        _x = self.__GET_POS(_x, _w)
-        _y = self.__GET_POS_Y(_y, _h)
-        [_x, _y, _w, _h] = self.__GET_POS_SIZE(_x, _y, _w, _h)
-        self.__GET_MAX(_x, _y, _w, _h)
+    def createBitmap(self, x, y, w = 0, h = 0):
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        self.__GET_MAX(x, y, w, h)
         
-        _bitmap = bitmap(self, pos = (_x, _y), size = (_w, _h))
+        _bitmap = bitmap(self, pos = (x, y), size = (w, h))
         return _bitmap
     
     
@@ -250,9 +259,9 @@ class panel(wx.ScrolledWindow):
         return _tab
     
     
-    def createDialog(self, title, _w):
-        _w = self.__GET_POS_SIZE(0, 0, _w, 0)[2]
-        wdt = dialog(self, title, _w)
+    def createDialog(self, title, w):
+        w = self.__GET_POS_SIZE(0, 0, w, 0)[2]
+        wdt = dialog(self, title, w)
         return wdt
     
     def createPopupMenu(self):
@@ -262,9 +271,12 @@ class panel(wx.ScrolledWindow):
 #    def setRClickAction(self, action):
 #        self.Bind(wx.EVT_CONTEXT_MENU, action)
     
-    def onRClickAction(self, event):
+    def __onRClickAction(self, event):
         event.Skip()
         pass
+    
+
+    
     
     def setCfg(self, key, value):
         self.frame.config.set(self.cfg_sel, key, value)

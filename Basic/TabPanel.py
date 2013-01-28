@@ -11,14 +11,19 @@ class tabPanel(Basic.Panel.panel):
         Basic.Panel.panel.__init__(self, parent, frame)
         self.tabName = None
         self.frameHeight = None
+        self.isCreated = False
         self.onCreate()
-        
-        print self.maxWidth, self.maxHeight
-        print self.MaxWidth, self.MaxHeight
-        
+        self.isCreated = True
         
         self.SetVirtualSize((self.maxWidth, self.maxHeight))
         self.SetScrollRate(20,20)
+        
+    def setFramePosition(self, height):
+        if self.isCreated:
+            self.frame.setFramePosition(height)
+        else:
+            self.frameHeight = height
+        
         
     def performResume(self, event):
         if self.frameHeight != None:
