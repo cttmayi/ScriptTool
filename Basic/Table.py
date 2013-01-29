@@ -2,7 +2,6 @@ import wx
 
 class table(wx.ListCtrl):
     
-    mWidth = 0
     
     def __init__(self, panel, pos = wx.DefaultPosition, size = wx.DefaultSize):
         wx.ListCtrl.__init__(self, panel, -1,
@@ -18,7 +17,6 @@ class table(wx.ListCtrl):
                            #| wx.LC_HRULES
                            #| wx.LC_SINGLE_SEL
                            )
-        self.mWidth = size[0]
     
     
     def getSel(self):
@@ -50,9 +48,11 @@ class table(wx.ListCtrl):
             else:
                 self.DeleteItem(rows)
 
-    def setColWidth(self, col, width = -1):
-        if (width != -1):
-            width = self.mWidth * width / 100
+    def setColWidth(self, col, width = None):
+        totalWidth = self.GetSize()[0]
+        
+        if (width != None):
+            width = totalWidth * width / 100
             self.SetColumnWidth(col, width)
         else:
             self.SetColumnWidth(col, wx.LIST_AUTOSIZE)
