@@ -110,9 +110,11 @@ class tree(wx.TreeCtrl):
       
     def setRClickAction(self, action):
         self.rclick_cbk = action
-        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.onRClickAction)
+        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.__onRClickAction)
             
-    def onRClickAction(self, event):
+    def __onRClickAction(self, event):
+        item = event.GetItem()
+        self.SelectItem(item)
         if self.rclick_cbk != None:
             self.rclick_cbk()
         event.Skip()
@@ -128,7 +130,7 @@ class tree(wx.TreeCtrl):
         keys.sort()
         for key in keys:
             v = dicts[key]
-            child = self.addItem(root, v.name, v.data)
+            child = self.addItem(root, v.name, v.data, v.attr)
             self.setTree(child, v)
     
     def getTree(self, root):

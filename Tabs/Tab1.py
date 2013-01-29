@@ -62,6 +62,7 @@ class tabFrame(tabPanel):
         button.setEnable(False)
         button.setEnable(True)
         self.text = self.createEdit(-1, 2, 50, 10)
+        self.text.setEnterAction(self.onEditEnter)
         
         #self.createGauge(-1, 2, 10)
         
@@ -129,6 +130,12 @@ class tabFrame(tabPanel):
         print 'list'
         print self.table.getItem(self.table.getSel(), 0)
 
+
+    def onEditEnter(self):
+        print 'enter'
+        pass
+
+
     def OnSelChanged(self):
         text = self.tree.getSelText()
         data = self.tree.getSelData()
@@ -139,9 +146,7 @@ class tabFrame(tabPanel):
         self.tree.addItem(item, "A")
         
     def onTreeRightClick(self):
-        print 'b'
         self.popupA.show()
-        print 'a'
         pass
     
     def onPass(self, event):
@@ -200,9 +205,7 @@ class tabFrame(tabPanel):
         pass
     
     def onClickLog(self):
-        
         #self.frame.setLogFormat([['R', 10], ['RR', 20]])
-        
         for i in range(1000):
             self.frame.log(['A', 'B'], 'red')
             self.frame.log(['A', 'C'])
@@ -211,7 +214,6 @@ class tabFrame(tabPanel):
             self.frame.log(['A', 'C'])
             self.frame.log(['A', 'C'])
             self.frame.log(['D', 'C'])
-        
         pass
     
     def onClickTree(self):

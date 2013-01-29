@@ -1,5 +1,3 @@
-import ConfigParser
-#import subprocess.Popen
 
 
 from MainFrame import mainFrame

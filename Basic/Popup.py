@@ -7,12 +7,22 @@ class popup(wx.Menu):
         wx.Menu.__init__(self)
         self.panel = panel
         
-    def addItem(self, name, action):
+    def addItem(self, name, action, pid = 0):
         tid = wx.NewId()
-        self.Bind(wx.EVT_MENU, action, id=tid)
+        self.action = action
+        self.pid = pid
+        self.Bind(wx.EVT_MENU, self.__onAction, id=tid)
         item = wx.MenuItem(self, tid, name)
         self.AppendItem(item)
         return tid
+    
+    def __onAction(self, event):
+        if self.action.func_code.co_argcount == 1:
+            self.action()
+        else:
+            self.action(self.pid)
+        event.Skip()
+        pass
     
 #    def addSubItem(self, tid, name, action):
 #        tid = wx.NewId()

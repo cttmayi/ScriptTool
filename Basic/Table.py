@@ -27,7 +27,7 @@ class table(wx.ListCtrl):
     def setSel(self, row):
         self.Focus(self, row)
     
-    def getItem(self, row, col):
+    def getItemText(self, row, col):
         item = self.GetItem(row, col)
         return item.GetText()
 

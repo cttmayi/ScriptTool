@@ -217,19 +217,6 @@ class cmdEvent(wx.PyCommandEvent):
 
 	def setData(self, data):
 		self.data = data
-	
-#	def getCallback(self):
-#		return self.cbk
-	
-#	def setCallback(self, cbk):
-#		self.cbk = cbk
-		
-#	def setThread(self, thread):
-#		self.thread = thread
-		
-#	def getThread(self):
-#		return self.thread
-	
 
 class cmdThread(threading.Thread):
 	def __init__(self, cmd, panel, evt_finish, fun_finish, evt_line, fun_line, timeout = 0):
@@ -340,7 +327,7 @@ class tree:
 		
 	def add(self, name, data = None, attr = None):
 		if not self.dict.has_key(name):
-			child = tree(name, data)
+			child = tree(name, data, attr)
 			self.dict[name] = child
 		return self.dict[name]
 	
