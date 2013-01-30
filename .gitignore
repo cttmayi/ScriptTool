@@ -4,3 +4,4 @@ Document
 Main.spec
 *.log
 MakeDoc.py
+*.xls
