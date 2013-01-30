@@ -21,7 +21,7 @@ class menu(wx.Menu):
         item = self.Append(-1, name, status)
         self.mids[item.GetId()] = mid
         self.click_cbks[item.GetId()] = cbk
-        self.frame.Bind(wx.EVT_MENU, self.onClick, item)
+        self.frame.Bind(wx.EVT_MENU, self.__onClick, item)
     
     def createSubMenu(self, name, subnames, cbk, status = ''):
         submenu = wx.Menu()
@@ -30,7 +30,7 @@ class menu(wx.Menu):
             item = submenu.Append(-1, subname, status)
             self.mids[item.GetId()] = mid
             self.click_cbks[item.GetId()] = cbk
-            self.frame.Bind(wx.EVT_MENU, self.onClick, item)
+            self.frame.Bind(wx.EVT_MENU, self.__onClick, item)
             mid = mid + 1
 
         self.AppendMenu(-1, name, submenu)
@@ -38,7 +38,7 @@ class menu(wx.Menu):
 
     
     
-    def onClick(self, event):
+    def __onClick(self, event):
         click_cbk = self.click_cbks[event.GetId()]
         
         if click_cbk.func_code.co_argcount == 1:

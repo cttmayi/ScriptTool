@@ -99,9 +99,11 @@ class tabFrame(tabPanel):
         #t.addEdit('Edit')
         #t.addTree('Tree')
         m = t.addTable('Table', ['A','B','C'])
-        m.setColWidth(0, 30)
-        m.setColWidth(1, 30)
+        m.setColWidth(0, 80)
+        m.setColWidth(1, 20)
         m.insertItem(0, ['1','1'])
+        m = t.addTable('Table', ['A','B'])
+        t.setSel(1)
         
         
         print self.getCfg('A')

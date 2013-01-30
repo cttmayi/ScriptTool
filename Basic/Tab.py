@@ -9,6 +9,9 @@ class tab(wx.Notebook):
         wx.Notebook.__init__(self, parent, pos = pos, size = size)
         
         
+    def setSel(self, tid):
+        self.SetSelection(tid)
+        
     def addEdit(self, title):
         pt = wx.Panel(self)
         wgt = edit(pt)
@@ -39,5 +42,6 @@ class tab(wx.Notebook):
         pt.SetSizer(sizer)
         self.AddPage(pt, title)
         return wgt
+    
     
     
