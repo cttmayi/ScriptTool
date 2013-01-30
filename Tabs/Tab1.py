@@ -2,6 +2,7 @@
 from Basic.TabPanel import tabPanel
 
 from Util.Util import util
+from Util.Excel import excel
 
 class tabFrame(tabPanel):
     tree = None
@@ -20,6 +21,7 @@ class tabFrame(tabPanel):
         self.createButton("Log", 8, -1, 15, self.onClickLog)
         self.createButton('Tree',8, -1, 15, self.onClickTree)
         self.createButton('DirDialog',8, -1, 15, self.onFileDialog)
+        self.createButton('WriteExcel',8, -1, 15, self.onWriteExcel)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -73,8 +75,8 @@ class tabFrame(tabPanel):
         self.bmp.setBitmap('d:\\1.jpg')
         
         self.popupA = self.createPopupMenu()
-        self.popupA.addItem("A", self.OnClick)
-        self.popupA.addItem("B", self.OnClick)
+        self.popupA.addItem("A", self.onPopupA_A)
+        self.popupA.addItem("B", self.onPopupA_B)
         
         
         #self.popupB = self.createPopupMenu()
@@ -224,6 +226,19 @@ class tabFrame(tabPanel):
     def onFileDialog(self):
         print self.frame.doFileDialog('C:\\', '*')
     
+    def onWriteExcel(self):
+        efile = excel.open('file.xls')
+        sytleR = excel.createSytle('red', True)
+        sytleY = excel.createSytle('yellow', True)
+        for i in range(10000):
+            excel.write(efile, 'sheet', ['NAME', 'DATE'], [sytleR, sytleY])
+        excel.setColWidth(efile, 'sheet', [4, 4, 4, 4])
+        
+        excel.close(efile)
+        
+        util.run('file.xls')
+        print 'success'
+    
     def onClickDialog(self):
         dlg = self.createDialog('Title', 20)
         edit = dlg.createEdit('Name:')
@@ -247,7 +262,17 @@ class tabFrame(tabPanel):
         self.popupA.show()
         #event.Skip()
         
+    def onPopupA_A(self):
+        item = self.tree.getSel()
+        self.tree.setItemText(item, 'A')
+        print 'A'
+        
+    def onPopupA_B(self):
+        print 'B'    
+    
         
     def OnRClickB(self, event):
         self.popupB.show() 
-        event.Skip()
+        
+        
+    

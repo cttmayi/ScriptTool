@@ -52,6 +52,7 @@ class tree(wx.TreeCtrl):
         text = self.GetItemText(item)
         return text
     
+    
     def getSelData(self):
         item = self.GetSelection()
         data = self.GetItemPyData(item)[0]
@@ -66,13 +67,24 @@ class tree(wx.TreeCtrl):
         text = self.GetItemText(item)
         return text       
 
+    def setItemText(self, item, text):
+        self.SetItemText(item, text)
+
     def getItemData(self, item):
         data = self.GetItemPyData(item)[0]
-        return data        
+        return data
+    
+    def setItemData(self, item, data):
+        attr = self.GetItemPyData(item)[1]
+        self.SetItemPyData([data, attr])
 
     def getItemAttr(self, item):
         attr = self.GetItemPyData(item)[1]
         return attr         
+
+    def setItemAttr(self, item, attr):
+        data = self.GetItemPyData(item)[0]
+        self.SetItemPyData([data, attr])
 
     def expandItem(self, item = None):
         if (item == None):

@@ -22,14 +22,12 @@ from Basic.Tab import tab
 class panel(wx.ScrolledWindow):
     
     __WIDGET_H = 3
-
-    __FIX_STATIC_H = 2
+    __WIDGET_W = 5
     
-    __TEXT_H = 22
+    __TEXT_H = 25
     __TEXT_W = 7
 
-    __CURRENT_X = 0
-    __CURRENT_Y = 0
+
     
 
     def __init__(self, parent, frame):
@@ -37,6 +35,9 @@ class panel(wx.ScrolledWindow):
         self.frame = frame
         self.output = frame.output
         self.status = frame.statusBar
+
+        self.__CURRENT_X = 0
+        self.__CURRENT_Y = 0
         
         self.maxWidth = 0
         self.maxHeight = 0
@@ -54,7 +55,7 @@ class panel(wx.ScrolledWindow):
 
     def __GET_POS(self, x, w):
         if (x < 0):
-            x = self.__CURRENT_X + 1
+            x = self.__CURRENT_X
         self.__CURRENT_X = x + w
         return x
     
@@ -65,10 +66,10 @@ class panel(wx.ScrolledWindow):
         return y
     
     def __GET_POS_SIZE(self, x, y, w, h):
-        x = self.__TEXT_W * x
-        y = (self.__TEXT_H + self.__WIDGET_H) * y  + self.__WIDGET_H
-        w = self.__TEXT_W * w
-        h = self.__TEXT_H * h
+        x = self.__WIDGET_W + self.__TEXT_W * x
+        y = self.__WIDGET_H + self.__TEXT_H * y
+        w = self.__TEXT_W * w - self.__WIDGET_W
+        h = self.__TEXT_H * h - self.__WIDGET_H
         return [x, y, w, h]
     
     def __GET_WIDTH(self, w):
