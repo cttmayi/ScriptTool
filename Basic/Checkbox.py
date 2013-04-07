@@ -3,11 +3,12 @@ import wx
 import math
 
 class checkboxs:
-    checkboxlist = []
+    
     panel = None
     callback = None
     
     def __init__(self, panel, names, pos, size, col = 1):
+        self.checkboxlist = []
         w = size[0]/col
         h = size[1]/math.floor(len(names)/col)
         for i in range(len(names)):
@@ -26,6 +27,10 @@ class checkboxs:
     def setAction(self, cbk):
         for cb in self.checkboxlist:
             cb.setAction(cbk)
+            
+    def destory(self):
+        for cb in self.checkboxlist:
+            cb.Destory()
 
 
 class checkbox(wx.CheckBox):
@@ -36,6 +41,12 @@ class checkbox(wx.CheckBox):
         self.id = cid
         self.panel = panel
         wx.CheckBox.__init__(self, panel, -1 , name, pos = pos, size = size)
+
+    def setSel(self, sel = True):
+        self.SetValue(sel)
+    
+    def getSel(self):
+        return self.GetValue()
         
     def setAction(self, cbk):
         self.callback = cbk

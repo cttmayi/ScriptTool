@@ -4,6 +4,8 @@ from Basic.TabPanel import tabPanel
 from Util.Util import util
 from Util.Excel import excel
 
+from Util.Misc import misc
+
 class tabFrame(tabPanel):
     tree = None
 
@@ -18,10 +20,12 @@ class tabFrame(tabPanel):
         self.createButton("InputWait", 8, -1, 15, self.OnClickInputWait)
         self.createButton("SendMessage", 8, -1, 15, self.onClickSendMessage)
         self.createButton("Dialog", 8, -1, 15, self.onClickDialog)
+        self.createButton('OpenFile', 8, -1, 15, self.onOpenFile)
         self.createButton("Log", 8, -1, 15, self.onClickLog)
         self.createButton('Tree',8, -1, 15, self.onClickTree)
         self.createButton('DirDialog',8, -1, 15, self.onFileDialog)
         self.createButton('WriteExcel',8, -1, 15, self.onWriteExcel)
+        self.createButton('util.split',8, -1, 15, self.onUtilSplit)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -73,6 +77,7 @@ class tabFrame(tabPanel):
         
         self.bmp = self.createBitmap(5,12,20,10)
         self.bmp.setBitmap('d:\\1.jpg')
+        self.bmp.setLeftClickAction(self.onBitmapCbk)
         
         self.popupA = self.createPopupMenu()
         self.popupA.addItem("A", self.onPopupA_A)
@@ -86,7 +91,12 @@ class tabFrame(tabPanel):
         
         #self.tree.setRClickAction(self.OnRClickB)
         
-        self.createCheckbox(-1, 12, 20, ['A', 'B']).setAction(self.onCheckbox)
+        self.cbok = self.createCheckbox(-1, 12, 20, ['A', 'B','C', 'D'], 4)
+        self.cbok.setAction(self.onCheckbox)
+        self.cbok.setSel(True, 0)
+        self.cbok.setSel(True, 1)
+        self.cbok.setSel(True, 2)
+        self.cbok.setSel(True, 3)
         
         self.createRadiobox(-1, 12, 'Sel', ['ABCD','B']).setAction(self.onRadio)
         
@@ -115,6 +125,10 @@ class tabFrame(tabPanel):
         self.setFramePosition(400)
         
         
+        minst = misc.getInstance()
+        if minst.makeInstallTool('Make'):
+            print 'pass'
+        
         return
 
     def onResume(self):
@@ -124,10 +138,10 @@ class tabFrame(tabPanel):
         print 'TAB1 kill Focus'
 
     def onRadio(self):
-        print self
         print 'Radio'
 
     def onCheckbox(self, cid):
+        print self.cbok.getSel(cid)
         print cid
 
     def onDoList(self):
@@ -155,6 +169,10 @@ class tabFrame(tabPanel):
     
     def onPass(self, event):
         pass
+    
+    def onBitmapCbk(self, x, y):
+        print 'bitmap', x, y
+    
     
     def OnClick(self, bid):
         #self.ClrprintW()
@@ -241,6 +259,14 @@ class tabFrame(tabPanel):
         util.run('file.xls')
         print 'success'
     
+    def onUtilSplit(self):
+        print util.split('ABCDEF', ['B'])
+        print util.split('ABCDEF', ['A'])
+        print util.split('ABCDEF', ['A', 'B'])
+        print util.split('ABCDEF', ['A', 'F'])
+        print util.split('ABCDEF', ['CD', 'F'])
+        print util.split('ABCDEFGHIJKL', ['A','CD', 'F', 'IJK'])
+    
     def onClickDialog(self):
         dlg = self.createDialog('Title', 20)
         edit = dlg.createEdit('Name:')
@@ -250,8 +276,12 @@ class tabFrame(tabPanel):
         
         if dlg.show() == True:
             print edit.getText()
-        dlg.Destroy()
+        dlg.destroy()
         pass
+
+    def onOpenFile(self):
+        inst = misc.getInstance()
+        inst.openFile('D:\\1.jpg', 'jpg')
 
     def OnCmdCbk(self, string):
         #self.panel.SetTitle("Click Count: %s" % event.GetClickCount())

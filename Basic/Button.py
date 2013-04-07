@@ -23,3 +23,6 @@ class button(wx.Button):
 
     def setVisible(self, show):
         self.Show(show)
+    
+    def destory(self):
+        self.Destroy()

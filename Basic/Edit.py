@@ -24,10 +24,9 @@ class edit(wx.TextCtrl):
         
     def setEnterAction(self, cbk):
         self.enter_cbk = cbk
-        self.Bind(wx.EVT_TEXT_ENTER, self.onEnter)
+        self.Bind(wx.EVT_TEXT_ENTER, self.__onEnter)
         
-    def onEnter(self, event):
-        #self.enter_cbk..func_code.co_varnames
+    def __onEnter(self, event):
         if self.enter_cbk.func_code.co_argcount == 1:
             self.enter_cbk()
         else:
@@ -35,11 +34,14 @@ class edit(wx.TextCtrl):
 
     def setChangeAction(self, cbk):
         self.change_cbk = cbk
-        self.Bind(wx.EVT_TEXT, self.onChange)
+        self.Bind(wx.EVT_TEXT, self.__onChange)
         
-    def onChange(self, event):
+    def __onChange(self, event):
         if self.change_cbk.func_code.co_argcount == 1:
             self.change_cbk()
         else:
             self.change_cbk(self.tid)
+            
+    def destory(self):
+        self.Destroy()
 

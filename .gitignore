@@ -1,7 +1,9 @@
 *.pyc
 Build/
-Document
+Document/
+Tool/
 Main.spec
 *.log
 MakeDoc.py
 *.xls
+*.ini

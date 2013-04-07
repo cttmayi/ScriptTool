@@ -12,7 +12,13 @@ import thread
 class util():
 	@staticmethod
 	def run(cmd):
-		subprocess.Popen(cmd.split(' ') ,shell=True)
+		subprocess.Popen(cmd ,shell=True)
+
+	@staticmethod
+	def runPara(cmd, para, shell = True):
+		if cmd.find(' ') > 0:
+			cmd = '"' + cmd + '"'
+			util.run(cmd + ' ' + para)
 	
 	
 	@staticmethod
@@ -189,6 +195,26 @@ class util():
 					r.add(simp, full, 'file')
 		return r
 				
+	@staticmethod
+	def split(strs, sps):
+		ret = []
+		i = 0
+		st = 0
+		#for s in range(len(strs)):
+		s = 0
+		while(s < len(strs)):
+			if strs[s: s+len(sps[i])] == sps[i]:
+				ret.append(strs[st:s])
+				s = s + len(sps[i]) - 1
+				st = s + 1
+
+				i = i + 1
+				if i == len(sps):
+					ret.append(strs[st:len(strs)])
+					return ret
+			s = s + 1
+		return ret
+
 
 class dynLoad():
 	def __init__(self,package,imp_list):

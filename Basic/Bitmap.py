@@ -7,6 +7,13 @@ class bitmap(wx.StaticBitmap):
         wx.StaticBitmap.__init__(self, parent, -1, pos = pos)
         self.width = size[0]
         self.height = size[1]
+        
+        #self.realX = pos[0]
+        #self.realY = pos[1]
+        #self.parent = parent
+        
+        self.bmpH = 0
+        self.bmpW = 0
     
     def setBitmap(self, path, w = 0, h = 0):
         ext = path.split('.')[-1]
@@ -27,6 +34,10 @@ class bitmap(wx.StaticBitmap):
 
         hh = img.GetHeight()
         ww = img.GetWidth()
+        
+        self.bmpW = ww
+        self.bmpH = hh
+        
         if (w == 0 and h == 0):
             w = ww
             h = hh
@@ -40,6 +51,9 @@ class bitmap(wx.StaticBitmap):
             else:
                 h = hh * w/ ww
 
+        self.realW = w
+        self.realH = h
+
         if (hh != h or ww != w):
             img = img.Scale(w, h, 0.95)
 
@@ -47,3 +61,21 @@ class bitmap(wx.StaticBitmap):
         self.SetBitmap(bmp)
         self.Refresh()
         
+    def setLeftClickAction(self, cbk):
+        self.Bind(wx.EVT_LEFT_DOWN, self.__onLeftClickAction)
+        self.__leftClickCbk = cbk
+        #self.parent.setLeftClickAction(self.realX, self.realY, self.realW, self.realH, cbk)
+        
+    def __onLeftClickAction(self, event):
+        x = event.GetX()
+        y = event.GetY()
+        
+        x = x * self.bmpW / self.realW
+        y = y * self.bmpH / self.realH
+        self.__leftClickCbk(x, y)
+        
+    def getBitmapSize(self):
+        return [self.bmpW, self.bmpH]
+        
+        
+

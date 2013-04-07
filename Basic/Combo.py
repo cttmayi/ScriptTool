@@ -11,3 +11,6 @@ class combo(wx.Choice):
     def setSel(self, sel):
         self.SetSelection(sel)
         pass
+
+    def destory(self):
+        self.Destroy()

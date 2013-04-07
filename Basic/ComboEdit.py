@@ -44,3 +44,7 @@ class comboEdit(wx.ComboBox):
             self.change_cbk()
         else:
             self.change_cbk(self.tid)
+            
+    def destory(self):
+        self.Destroy()        
+    

@@ -7,6 +7,9 @@ from Util.Util import dynLoad
 from Util.Util import cmdThread
 import ConfigParser
 
+from Util.Misc import misc
+
+from Basic.Dialog import dialog
 
 class customerEvent(wx.PyCommandEvent):
     def __init__(self, pid, eventType, data):
@@ -38,8 +41,17 @@ class mainFrame(wx.Frame):
         
         wx.Frame.__init__(self, None, -1, _name, pos=_pos, size=_size)
 
+        if (not os.path.isfile(self.cfg_name)):
+            tmpFile = open(self.cfg_name, "w")
+            tmpFile.close()
+            pass
+
         self.config = ConfigParser.ConfigParser()
         self.config.readfp(open(self.cfg_name, 'r'))
+
+        self.misc = misc.getInstance()
+        self.misc.setFrame(self)
+
 
         self.menuBar = wx.MenuBar()
         self.SetMenuBar(self.menuBar)
@@ -230,7 +242,7 @@ class mainFrame(wx.Frame):
 
     def doFileDialog(self, defaultPath = None, filefilter = '*.*'):
         #wildcard = "All files (*.*)|*.*"
-        wildcard = "files (*." + filefilter + ")|*." + filefilter
+        wildcard = "files (" + filefilter + ")|" + filefilter
         path = None
         
         dialog = wx.FileDialog(None, "Choose a file", os.getcwd(), "", wildcard, wx.OPEN)
@@ -254,6 +266,12 @@ class mainFrame(wx.Frame):
             path = dialog.GetPath()
         dialog.Destroy()
         return path
+
+    def createDialog(self, title, w):
+        w = self.TEXT_W * w
+        wdt = dialog(self, title, w)
+        return wdt
+
 
     def runCmdCbk(self, cmd, fcbk = None, lcbk = None):
         EVT_CMD_FINISH = None
@@ -312,7 +330,6 @@ class mainFrame(wx.Frame):
             out.SetStringItem(index, i, datas[i])
         
         if color != None:
-            print index
             item = self.outList.GetItem(index)
             item.SetTextColour(color)
             self.outList.SetItem(item)  
@@ -347,6 +364,9 @@ class mainFrame(wx.Frame):
     def setOutputColor(self, fcolor, bcolor = wx.WHITE):
         self.output.SetDefaultStyle(wx.TextAttr(fcolor, bcolor))
 '''
+   
+   
+   
 
 class mainApp(wx.App):
     mFrame = None

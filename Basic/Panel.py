@@ -2,6 +2,7 @@
 import wx
 import math
 
+
 from Basic.Button import button
 from Basic.Edit import edit
 from Basic.Combo import combo
@@ -14,6 +15,7 @@ from Basic.Radiobox import radiobox
 from Basic.ComboEdit import comboEdit
 from Basic.Dialog import dialog
 from Basic.Tab import tab
+
 
 """class panel
 """
@@ -50,7 +52,8 @@ class panel(wx.ScrolledWindow):
             
         self.Bind(wx.EVT_CONTEXT_MENU, self.__onRClickAction)
         
-
+        #self.Bind(wx.EVT_LEFT_DOWN, self.__onMouseLeftDown)
+        self.__leftClickZone = []
 
 
     def __GET_POS(self, x, w):
@@ -113,15 +116,28 @@ class panel(wx.ScrolledWindow):
     
 #    def setOutputColor(self, color):
 #        self.frame.setOutputColor(color) 
-  
+
+    def createStaticBox(self, text, x, y, w, h):
+        x = self.__GET_POS(x, w)
+        y = self.__GET_POS_Y(y, h)
+        [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
+        
+        x = x - self.__WIDGET_W
+        w = w + 2 * self.__WIDGET_W
+        y = y + self.__WIDGET_H
+        #h = h + self.__WIDGET_H
+        
+        wx.StaticBox(self, -1, text, pos=(x,y), size=(w,h))
+        pass
+
     
-    def createStatic(self, _text, x, y, w = 0):
+    def createStatic(self, text, x, y, w = 0):
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         spos = self.__GET_POS_SIZE(x, y, w, h)
 
-        wdt = wx.StaticText(self, -1, _text, pos=(spos[0], spos[1]))
+        wdt = wx.StaticText(self, -1, text, pos=(spos[0], spos[1]))
         if (w == 0):
             size = wdt.GetSize()
             w = self.__GET_WIDTH(size[0])
@@ -133,7 +149,6 @@ class panel(wx.ScrolledWindow):
         createEdit -> Basic.Edit.edit
         """
         
-    
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         
@@ -276,8 +291,22 @@ class panel(wx.ScrolledWindow):
         event.Skip()
         pass
     
-
+    def setLeftClickAction(self, x, y, w, h, cbk):
+        self.__leftClickZone.append([x, y, w, h, cbk])
     
+    def __onMouseLeftDown(self, event):
+        event.Skip()
+        x = event.GetX()
+        y = event.GetY()
+        
+        #print x, y
+        for zone in self.__leftClickZone:
+            if (x >= zone[0] and x <= zone[0] + zone[2] and y >= zone[1] and y <= zone[1] + zone[3]):
+                xx = x - zone[0]
+                yy = y - zone[1]
+                cbk = zone[4]
+                cbk(xx, yy)
+        pass
     
     def setCfg(self, key, value):
         self.frame.config.set(self.cfg_sel, key, value)
@@ -289,16 +318,6 @@ class panel(wx.ScrolledWindow):
         except:
             value = default
         return value
-            
-    
-    def getCfgInt(self, key, default = 0):
-        try:
-            value = int(self.frame.config.get(self.cfg_sel, key))
-        except:
-            value = default
-        
-        return value
-        pass
         
         
 
