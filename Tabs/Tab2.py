@@ -7,6 +7,7 @@ class tabFrame(tabPanel):
 
     def onCreate(self):
         self.setFramePosition(600)
+        self.addModule('Module1', 0, 4)
         pass
     
     def onResume(self):

@@ -20,7 +20,7 @@ class misc():
         self.frame = frame
     
     def __openFileBrowse(self):
-        print 'browse'
+        #print 'browse'
         v = self.frame.doFileDialog('C:/', '*.*')
         if v != None:
             self.__openFileEdit.setText(v)
@@ -53,7 +53,7 @@ class misc():
         srcDir = None
         for src in (srcPaths):
             src = src + name
-            print src
+            #print src
             if (os.path.isdir(src)):
                 srcDir = src
 
@@ -67,7 +67,7 @@ class misc():
             return True
 
         dlg = self.frame.createDialog('Install', 15 + len(name))
-        print name
+        #print name
         dlg.createStatic('install "' + name + '", OK?')
         dlg.createOkCancel()
         if dlg.show() == True:

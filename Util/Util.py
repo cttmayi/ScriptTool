@@ -26,7 +26,7 @@ class util():
 		#subprocess.call(cmd.split(' '), shell=True)
 		outFile =  tempfile.SpooledTemporaryFile() 
 
-		proc = subprocess.Popen(cmd, stdout=outFile, universal_newlines=False)
+		proc = subprocess.Popen(cmd, stdout=outFile, stderr=outFile, universal_newlines=False, shell=True)
 		wait_remaining_sec = timeout
 	
 
@@ -49,7 +49,7 @@ class util():
 	
 	@staticmethod
 	def runPipe(cmd):
-		return subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stdin=subprocess.PIPE ,shell=False)
+		return subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
 	
 	@staticmethod
 	def stopCmd(popen):
