@@ -26,6 +26,8 @@ class tabFrame(tabPanel):
         self.createButton('DirDialog',8, -1, 15, self.onFileDialog)
         self.createButton('WriteExcel',8, -1, 15, self.onWriteExcel)
         self.createButton('util.split',8, -1, 15, self.onUtilSplit)
+        self.createButton('timer start',8, -1, 15, self.onTimerStart)
+        self.createButton('timer stop',8, -1, 15, self.onTimerStop)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -47,7 +49,7 @@ class tabFrame(tabPanel):
         
         #self.tree.deleteTreeItem(item)
         
-        table = self.createTable(-1, 2, 60, 10, ['A','B','C'])
+        table = self.createTable(-1, 2, int(self.getDisplayWidth()/2), 10, ['A','B','C'])
         table.setColWidth(0, 30)
         table.setColWidth(1, 30)
         table.setColWidth(2, 50)
@@ -75,7 +77,7 @@ class tabFrame(tabPanel):
         self.sel = self.createCombo(-1, 2, ["COM1","COM2"])
         self.sel.setSel(1)
         
-        self.bmp = self.createBitmap(5,12,20,10)
+        self.bmp = self.createBitmap(5,18,20,10)
         self.bmp.setBitmap('d:\\1.jpg')
         self.bmp.setLeftClickAction(self.onBitmapCbk)
         
@@ -122,7 +124,7 @@ class tabFrame(tabPanel):
         
         #ce = self.createComboEdit(300, 10, 20, ['A', 'B'])
         
-        self.setFramePosition(400)
+        #self.setFramePosition(400)
         
         
         minst = misc.getInstance()
@@ -305,6 +307,18 @@ class tabFrame(tabPanel):
         
     def OnRClickB(self, event):
         self.popupB.show() 
+        
+    def onTimerStart(self):
+        self.frame.setTimer(self.onTimer, 1000)
+        pass
+    
+    def onTimerStop(self):
+        self.frame.setTimer(self.onTimer, 0)
+        pass
+    
+    def onTimer(self, e):
+        self.frame.printL('onTimer')
+        
         
         
     

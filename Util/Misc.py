@@ -2,6 +2,7 @@ import os
 import shutil
 
 from Edit import uedit
+from Global import globals
 
 class misc():
     def __init__(self):
@@ -45,8 +46,9 @@ class misc():
         return ret
   
 
-    def makeInstallTool(self, name):
-        srcPaths = ['D:\\Tool\\','D:\\bak\\Tool\\']
+    def makeInstallTool(self, name, force = False):
+        g = globals.getInstance()
+        srcPaths = g.installSourcePath #['D:\\Tool\\','D:\\bak\\Tool\\']
         dstPath = 'Tool\\'
         
         dstDir = dstPath + name

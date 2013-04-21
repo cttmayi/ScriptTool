@@ -16,20 +16,19 @@ from Basic.ComboEdit import comboEdit
 from Basic.Dialog import dialog
 from Basic.Tab import tab
 
+from Util.Global import globals
+
 
 """class panel
 """
-
-
 class panel():
     
-    __WIDGET_H = 3
-    __WIDGET_W = 5
-    
-    __TEXT_H = 25
-    __TEXT_W = 7
-
     def __init__(self, frame, panel = None , pos = None):
+        g = globals.getInstance()
+        self.__WIDGET_H = g.uiWidgetHeight
+        self.__WIDGET_W = g.uiWidgetWidth
+        self.__TEXT_H = g.uiTextHeight
+        self.__TEXT_W = g.uiTextWidth
         
         self.frame = frame
         self.output = frame.output
@@ -82,7 +81,7 @@ class panel():
         return [x, y, w, h]
     
     def __GET_WIDTH(self, w):
-        w = math.floor(w / self.__TEXT_W)
+        w = math.floor((w + self.__TEXT_W - 1) / self.__TEXT_W)
         return w
     
     def __GET_MAX(self, x, y, w, h):
@@ -91,6 +90,13 @@ class panel():
         if self.maxHeight < y + h:
             self.maxHeight = y + h
     
+    def getMaxPosition(self, x, y, w, h):
+        self.__GET_MAX(x, y, w, h)
+    
+    
+    def getDisplayWidth(self):
+        size = wx.DisplaySize()
+        return int((size[0] / self.__TEXT_W - 1) / 2 * 2)
     
     def printW(self, text):
         """print word in message window"""

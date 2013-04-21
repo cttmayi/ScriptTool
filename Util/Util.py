@@ -73,12 +73,29 @@ class util():
 			ls=os.listdir(dirname)
 		except:
 			print 'access deny'
+			return None
 		else:
 			for l in ls:
 				filename = os.path.join(dirname,l)
 				if( not os.path.isdir(filename)):
 					files.append(filename)
 		return files
+	
+	@staticmethod
+	def listdir(dirname):
+		dirs = []
+		try:
+			ls=os.listdir(dirname)
+		except:
+			print 'access deny'
+			return None
+		else:
+			for l in ls:
+				filename = os.path.join(dirname,l)
+				if(os.path.isdir(filename)):
+					dirs.append(filename)
+		return dirs
+
 	
 	@staticmethod
 	def dir2module(_dir):

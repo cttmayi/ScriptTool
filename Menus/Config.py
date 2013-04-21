@@ -10,11 +10,14 @@ class menuFrame(menu):
         self.menuName = 'Config'
         
         items = [
-        ["txt", self.onCfgTxtFile, "config txt file"],
-
+                 ["txt", self.onCfgTxtFile, "config txt file"],
         ]
         for item in (items):
             self.createMenu(item[0], item[1],item[2]);
+        
+        self.tools = util.listdir('Tool')
+        if (self.tools != None):
+            self.createSubMenu('Tool', self.tools, None)
 
     def onCfgTxtFile(self):
         inst = uedit.getInstance()

@@ -4,8 +4,6 @@ from MainFrame import mainFrame
 from MainFrame import mainApp
 
 
-from Util.Excel import excel
-
 class App(mainApp):
 
     def OnInit(self):        

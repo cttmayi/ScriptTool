@@ -34,17 +34,15 @@ class menu(wx.Menu):
             mid = mid + 1
 
         self.AppendMenu(-1, name, submenu)
-        
-
-    
     
     def __onClick(self, event):
         click_cbk = self.click_cbks[event.GetId()]
         
-        if click_cbk.func_code.co_argcount == 1:
-            click_cbk()
-        else:
-            click_cbk(self.mids[event.GetId()])
+        if click_cbk != None:
+            if click_cbk.func_code.co_argcount == 1:
+                click_cbk()
+            else:
+                click_cbk(self.mids[event.GetId()])
         
     
     def runCmdCbk(self, cmd, fcbk = None, lcbk = None):

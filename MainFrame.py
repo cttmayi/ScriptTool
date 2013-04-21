@@ -8,6 +8,7 @@ from Util.Util import cmdThread
 import ConfigParser
 
 from Util.Misc import misc
+from Util.Global import globals
 
 from Basic.Dialog import dialog
 
@@ -21,9 +22,6 @@ class customerEvent(wx.PyCommandEvent):
 
 
 class mainFrame(wx.Frame):
-    cfg_name = 'cfg.ini'
-    
-    TEXT_W = 7
     
     panel = None
     outPanel = None
@@ -31,6 +29,11 @@ class mainFrame(wx.Frame):
     statusBar = None
     
     def __init__(self, _name, _pos=(0,0), _size = None):
+        g = globals.getInstance()
+        
+        self.cfg_name = g.configFileName #'cfg.ini'
+        
+        self.TEXT_W = g.uiTextWidth
         
         if (_size == None):
             size = wx.DisplaySize()
@@ -40,6 +43,8 @@ class mainFrame(wx.Frame):
         height = _size[1] - 100
         
         wx.Frame.__init__(self, None, -1, _name, pos=_pos, size=_size)
+
+        self.timers = {}
 
         if (not os.path.isfile(self.cfg_name)):
             tmpFile = open(self.cfg_name, "w")
@@ -190,8 +195,8 @@ class mainFrame(wx.Frame):
     
 
     def onNotebookPageChange(self, event):
-        print event.Selection
-        print event.OldSelection
+        #print event.Selection
+        #print event.OldSelection
         
         new_page = self.notebook.GetPage(event.Selection)
 
@@ -223,7 +228,7 @@ class mainFrame(wx.Frame):
         self.GetEventHandler().AddPendingEvent(event)
 
     def onCustomerEvent(self, event):
-        print 'onCustomerEvent'
+        #print 'onCustomerEvent'
         function = event.data[0]
         data = event.data[1]
         function(data)
@@ -346,6 +351,24 @@ class mainFrame(wx.Frame):
             out.SetColumnWidth(i, formats[i][1] * self.TEXT_W)
         pass
 
+    def setTimer(self, func, time):
+        if self.timers.has_key(func):
+            timer = self.timers[func]
+            if time != 0:
+                timer.Stop()
+                #self.Bind(wx.EVT_TIMER, func, timer)
+                timer.Start(time)
+            else:
+                timer.Stop()            
+        else:
+            if time != 0:
+                timer = wx.Timer(self)
+                self.timers[func] = timer
+                self.Bind(wx.EVT_TIMER, func, timer)
+                timer.Start(time)
+    
+    
+
 '''
     def setOutputStringColor(self, text, color = wx.RED, pos = -1):
         strs = self.output.GetValue()
@@ -365,7 +388,7 @@ class mainFrame(wx.Frame):
         self.output.SetDefaultStyle(wx.TextAttr(fcolor, bcolor))
 '''
    
-   
+
    
 
 class mainApp(wx.App):
