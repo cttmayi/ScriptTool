@@ -1,7 +1,10 @@
 import wx
 import Basic.Panel
 from Util.Util import dynLoad
- 
+
+#for build
+from Basic.Module import module
+
 ########################################################################
 class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
     #----------------------------------------------------------------------

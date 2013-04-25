@@ -10,6 +10,10 @@ import ConfigParser
 from Util.Misc import misc
 from Util.Global import globals
 
+# for build
+from Basic.TabPanel import tabPanel
+from Basic.Menu import menu
+
 from Basic.Dialog import dialog
 
 class customerEvent(wx.PyCommandEvent):

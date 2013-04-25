@@ -48,34 +48,37 @@ class misc():
 
     def makeInstallTool(self, name, force = False):
         g = globals.getInstance()
-        srcPaths = g.installSourcePath #['D:\\Tool\\','D:\\bak\\Tool\\']
+        srcPaths = g.installSourcePath
         dstPath = 'Tool\\'
         
         dstDir = dstPath + name
         srcDir = None
         for src in (srcPaths):
             src = src + name
-            #print src
             if (os.path.isdir(src)):
                 srcDir = src
+
+        if not os.path.isdir(dstPath):
+            os.makedirs(dstPath)
+  
+        if os.path.isdir(dstDir):
+            return True
 
         if srcDir == None:
             return False
 
-        if not os.path.isdir(dstPath):
-            os.makedirs(dstPath)
-        
-        if os.path.isdir(dstDir):
-            return True
-
-        dlg = self.frame.createDialog('Install', 15 + len(name))
-        #print name
-        dlg.createStatic('install "' + name + '", OK?')
-        dlg.createOkCancel()
-        if dlg.show() == True:
+        if force == False:
+            dlg = self.frame.createDialog('Install', 15 + len(name))
+            dlg.createStatic('install "' + name + '", OK?')
+            dlg.createOkCancel()
+            if dlg.show() == True:
+                shutil.copytree(srcDir, dstDir)
+                dlg.destroy()
+                return True
+            else:
+                dlg.destroy()
+                return False
+        else:
             shutil.copytree(srcDir, dstDir)
-            dlg.destroy()
             return True
 
-        dlg.destroy()
-        return True

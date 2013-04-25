@@ -5,10 +5,18 @@
 from Excel import excel
 
 
+
+
+from Util import dynLoad
+
 class globals():
 
     
     def __init__(self):
+        
+        dyn = dynLoad('cfgData', ['*'])
+        ins = dyn.getClassInstance('cfgData')
+        
         # ui
         self.uiWidgetWidth = 5
         self.uiWidgetHeight = 3
@@ -16,7 +24,7 @@ class globals():
         self.uiTextHeight = 25        
         
         # install
-        self.installSourcePath = ['D:\\Tool\\','D:\\bak\\Tool\\']
+        self.installSourcePath = ins.installSourcePath
         
         #ini
         self.configFileName = 'cfg.ini'
