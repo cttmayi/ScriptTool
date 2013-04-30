@@ -28,6 +28,7 @@ class tabFrame(tabPanel):
         self.createButton('util.split',8, -1, 15, self.onUtilSplit)
         self.createButton('timer start',8, -1, 15, self.onTimerStart)
         self.createButton('timer stop',8, -1, 15, self.onTimerStop)
+        self.createButton('goto tab2',8, -1, 15, self.onGotoTab2)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -315,6 +316,9 @@ class tabFrame(tabPanel):
     def onTimerStop(self):
         self.frame.setTimer(self.onTimer, 0)
         pass
+    
+    def onGotoTab2(self):
+        self.openTab('Tab2', 'todo')
     
     def onTimer(self, e):
         self.frame.printL('onTimer')

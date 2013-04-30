@@ -171,7 +171,7 @@ class mainFrame(wx.Frame):
                 if ins.tabName == None:
                     ins.tabName = name
                 notebook.AddPage(ins, ins.tabName)
-                self.tabFrames[ins.tabName] = tabId
+                self.tabFrames[ins.tabName] = [ tabId, ins ]
                 tabId = tabId + 1
         
         notebook.GetPage(0).performResume(None)

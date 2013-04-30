@@ -14,3 +14,6 @@ class tabFrame(tabPanel):
         minst = misc.getInstance()
         if minst.makeInstallTool('Make'):
             print 'pass'
+            
+    def onOpenTab(self, data):
+        self.frame.printL(data)

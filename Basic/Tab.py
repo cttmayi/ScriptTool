@@ -11,6 +11,7 @@ class tab(wx.Notebook):
         
     def setSel(self, tid):
         self.SetSelection(tid)
+    
         
     def addEdit(self, title):
         pt = wx.Panel(self)

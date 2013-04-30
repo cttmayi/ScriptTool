@@ -33,6 +33,15 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         ins = dyn.getClassInstance('moduleFrame', self, name, (x, y))
         return ins
     
+    def openTab(self, name, data):
+        if (self.frame.tabFrames.has_key(name)):
+            tid = self.frame.tabFrames[name][0]
+            ins = self.frame.tabFrames[name][1]
+            ins.onOpenTab(data)
+            self.frame.notebook.SetSelection(tid)
+            return True
+        return False
+    
     def setFramePosition(self, height):
         if self.isCreated:
             self.frame.setFramePosition(height)
@@ -78,3 +87,5 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         #print 'onDestroy'
         pass
     
+    def onOpenTab(self, data):
+        pass
