@@ -190,7 +190,7 @@ class util():
 					if (strp != end):
 						cont = cont.add(strp, None, 'package')
 					else:
-						cont = cont.add(strp, strline, 'class')
+						cont = cont.add('<class>' + strp, strline, 'class')
 		return root
 	
 	@staticmethod

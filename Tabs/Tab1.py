@@ -29,6 +29,7 @@ class tabFrame(tabPanel):
         self.createButton('timer start',8, -1, 15, self.onTimerStart)
         self.createButton('timer stop',8, -1, 15, self.onTimerStop)
         self.createButton('goto tab2',8, -1, 15, self.onGotoTab2)
+        self.createButton('util',8, -1, 15, self.onUtil)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -190,9 +191,7 @@ class tabFrame(tabPanel):
         #self.runCmdCbk("ping 127.0.0.1 -n 10", None, self.OnCmdCbk, 2000)
         #self.runCmdCbk("cmd", None, self.OnCmdCbk, 1000)
         
-        print util.lgStEd('A=0\nB=0\n\nCD=0\r', ['A','B',''])
-        
-        print util.lgAttr('Frames: containing=[0,0][540,960] parent=[0,0][540,960] display=[0,0][540,960]\r\nCont: containing=[0,0][540,960] parent=[0,0][540,960] display=[0,0][540,960]\n', '=', ' ', ':')
+
 
         self.frame.setFramePosition(100)
 
@@ -210,14 +209,6 @@ class tabFrame(tabPanel):
         
         print self.thread.inputWait('dir', None, 5000, 1000, self.printW)
         
-        #r = util.lgMap('com.android.map', '.')
-
-        #for i in range(20):
-        #    self.Log(['message'])
-        
-        
-        #r.show()
-        
         #print self.frame.doFileDialog('C:')
         
         pass
@@ -231,6 +222,7 @@ class tabFrame(tabPanel):
     
     def onClickLog(self):
         #self.frame.setLogFormat([['R', 10], ['RR', 20]])
+
         for i in range(1000):
             self.frame.log(['A', 'B'], 'red')
             self.frame.log(['A', 'C'])
@@ -319,6 +311,14 @@ class tabFrame(tabPanel):
     
     def onGotoTab2(self):
         self.openTab('Tab2', 'todo')
+    
+    def onUtil(self):
+        print util.lgStEd('A=0\nB=0\n\nCD=0\r', ['A','B',''])
+        print util.lgAttr('Frames: containing=[0,0][540,960] parent=[0,0][540,960] display=[0,0][540,960]\r\nCont: containing=[0,0][540,960] parent=[0,0][540,960] display=[0,0][540,960]\n', '=', ' ', ':')        
+        r = util.lgMap(['com.android.map.a', 'com.android.map'], '.')
+        r.show()
+        
+        pass
     
     def onTimer(self, e):
         self.frame.printL('onTimer')
