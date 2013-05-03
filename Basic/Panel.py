@@ -1,3 +1,5 @@
+# coding=gb2312
+
 
 import wx
 import math
@@ -101,26 +103,27 @@ class panel():
         return int((size[0] / self.__TEXT_W - 1) / 2 * 2)
     
     def printW(self, text):
-        """print word in message window"""
+        """打印数据到message窗口 """
         self.frame.printW(text)
     
     def printL(self, text):
-        """print line in message window"""
+        """打印数据行到message窗口 """
         self.frame.printL(text)
     
 
     def log(self, datas):
-        """print log in log window"""
+        """打印数据行到log窗口 
+        """
         self.frame.log(datas)
 
         
     def clrPrint(self):
-        """clear message window
+        """清空Message窗口
         """
         self.frame.clrPrint()
     
     def printStatus(self, text):
-        """print message in Status Bar
+        """打印数据到 Status Bar
         """
         self.frame.printStatus(text)
 
@@ -159,8 +162,7 @@ class panel():
         return wdt
     
     def createEdit(self, x, y, w, h = 1, tid = 0):
-        """create edit text in Panel
-        createEdit -> Basic.Edit.edit
+        """创建  edit text
         """
         
         x = self.__GET_POS(x, w)
@@ -180,18 +182,20 @@ class panel():
         
         return wdt
 
-    def createButton(self, _text, x, y, w, _cbk, _id = 0):
+    def createButton(self, text, x, y, w, cbk, _id = 0):
+        """创建按钮(Button)
+        """
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        wdt = button(self.panel, _text, (x, y), (w, h), _cbk, _id)
+        wdt = button(self.panel, text, (x, y), (w, h), cbk, _id)
         return wdt
         
-    def createCombo(self, x, y, _list, edit = False):
-        w = len(_list[0])+3
+    def createCombo(self, x, y, lists, edit = False):
+        w = len(lists[0])+3
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
@@ -200,7 +204,7 @@ class panel():
         
         #style = wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER
         
-        wdt = combo(self.panel, (x, y), _list)
+        wdt = combo(self.panel, (x, y), lists)
         return wdt
 
     def createComboEdit(self, x, y, w, _list = []):
@@ -235,6 +239,9 @@ class panel():
         return _tree
         
     def createTable(self, x, y, w, h, columns):
+        """ 创建表格(Table)
+        """
+        
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
@@ -270,6 +277,8 @@ class panel():
 
 
     def createBitmap(self, x, y, w = 0, h = 0):
+        """创建图片控件(Bitmap)
+        """
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
