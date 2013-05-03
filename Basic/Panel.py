@@ -162,7 +162,7 @@ class panel():
         return wdt
     
     def createEdit(self, x, y, w, h = 1, tid = 0):
-        """创建  edit text
+        """创建  编辑框(Edit)
         """
         
         x = self.__GET_POS(x, w)
