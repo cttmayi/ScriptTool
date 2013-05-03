@@ -18,7 +18,7 @@ class util():
 	def runPara(cmd, para, shell = True):
 		if cmd.find(' ') > 0:
 			cmd = '"' + cmd + '"'
-			util.run(cmd + ' ' + para)
+		util.run(cmd + ' ' + para)
 	
 	
 	@staticmethod
