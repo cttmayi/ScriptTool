@@ -44,9 +44,19 @@ class misc():
         if ret == None:
             ret = False
         return ret
-  
+    
+    def cfgUedit(self, ext):
+        inst = uedit.getInstance()
+        dlg = self.frame.createDialog('Choose', 35 + len(ext))
+        dlg.createStatic('choose executer to open ' + ext + ' file')
+        self.__openFileEdit = dlg.createEdit('Path')
+        dlg.createButton('Browse', self.__openFileBrowse)
+        dlg.createOkCancel()
+        if dlg.show() == True:
+            inst.setEditCfg(ext, self.__openFileEdit.getText())
+        dlg.destroy()        
 
-    def makeInstallTool(self, name, force = False):
+    def makeInstallTool(self, name, force = None):
         g = globals.getInstance()
         srcPaths = g.cfgData.installSourcePath
         dstPath = 'Tool\\'
@@ -61,7 +71,7 @@ class misc():
         if not os.path.isdir(dstPath):
             os.makedirs(dstPath)
   
-        if os.path.isdir(dstDir):
+        if os.path.isdir(dstDir) and force != True:
             return True
 
         if srcDir == None:

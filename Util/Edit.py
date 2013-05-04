@@ -51,6 +51,15 @@ class uedit():
             value = None
         return value
     
+    def listEditCfg(self):
+        items = self.config.items(self.ext)
+        
+        ret = []
+        for i in range(len(items)):
+            ret.append(items[i][0])
+        
+        return ret
+    
     def openFile(self, ofile, ext = None, para = None):
         if ext == None:
             sfile = os.path.basename(ofile)

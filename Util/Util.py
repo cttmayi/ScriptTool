@@ -67,7 +67,7 @@ class util():
 	
 	
 	@staticmethod
-	def listfile(dirname):
+	def listfile(dirname, full = True):
 		files = []
 		try:
 			ls=os.listdir(dirname)
@@ -78,11 +78,14 @@ class util():
 			for l in ls:
 				filename = os.path.join(dirname,l)
 				if( not os.path.isdir(filename)):
-					files.append(filename)
+					if full == True:
+						files.append(filename)
+					else:
+						files.append(l)
 		return files
 	
 	@staticmethod
-	def listdir(dirname):
+	def listdir(dirname, full = False):
 		dirs = []
 		try:
 			ls=os.listdir(dirname)
@@ -93,7 +96,10 @@ class util():
 			for l in ls:
 				filename = os.path.join(dirname,l)
 				if(os.path.isdir(filename)):
-					dirs.append(filename)
+					if full == True:
+						dirs.append(filename)
+					else:
+						dirs.append(l)
 		return dirs
 
 	

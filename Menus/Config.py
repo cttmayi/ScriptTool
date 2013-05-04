@@ -2,27 +2,31 @@ from Basic.Menu import menu
 from Util.Util import util
 
 from Util.Edit import uedit
-
+from Util.Misc import misc
 
 class menuFrame(menu):
     
     def onCreate(self):
         self.menuName = 'Config'
-        
-        items = [
-                 ["txt", self.onCfgTxtFile, "config txt file"],
-        ]
-        for item in (items):
-            self.createMenu(item[0], item[1],item[2]);
-        
-        self.tools = util.listdir('Tool')
-        if (self.tools != None):
-            self.createSubMenu('Tool', self.tools, None)
-
-    def onCfgTxtFile(self):
+         
         inst = uedit.getInstance()
-        inst.setEditCfg('jpg', 'mspaint')
-        #inst.openFile('D:\\1.jpg')
+        self.uedit = inst.listEditCfg()
+        print self.uedit
+        if (self.uedit != None):
+            self.createSubMenu('uedit', self.uedit, self.onCfgUedit)        
         
-        self.frame.doFileDialog('C:/', '*.exe')
+        self.tools = util.listdir('Tool', False)
+        if (self.tools != None):
+            self.createSubMenu('tool', self.tools, None)
+    
+    def onCfgUedit(self, eid):
+        m = misc.getInstance()
+        m.cfgUedit(self.uedit[eid])
         
+    def onCfgTool(self, tid):
+        m = misc.getInstance()
+        m.makeInstallTool(self.tools[tid])
+
+    
+    
+    
