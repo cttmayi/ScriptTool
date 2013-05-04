@@ -89,6 +89,7 @@ class misc():
                 dlg.destroy()
                 return False
         else:
+            shutil.rmtree(dstDir)
             shutil.copytree(srcDir, dstDir)
             return True
 

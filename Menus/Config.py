@@ -17,7 +17,7 @@ class menuFrame(menu):
         
         self.tools = util.listdir('Tool', False)
         if (self.tools != None):
-            self.createSubMenu('tool', self.tools, None)
+            self.createSubMenu('tool', self.tools, self.onCfgTool)
     
     def onCfgUedit(self, eid):
         m = misc.getInstance()
@@ -25,7 +25,10 @@ class menuFrame(menu):
         
     def onCfgTool(self, tid):
         m = misc.getInstance()
-        m.makeInstallTool(self.tools[tid])
+        if m.makeInstallTool(self.tools[tid], True) != True:
+            self.frame.printL('insall ' + self.tools[tid] +  ' error')
+        else:
+            self.frame.printL('insall ' + self.tools[tid] +  ' success')
 
     
     
