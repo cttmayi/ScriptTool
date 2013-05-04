@@ -2,11 +2,16 @@
 import ConfigParser
 import os
 from Util import util
+from Global import globals
+
 
 class uedit():
     def __init__(self):
+        g = globals.getInstance()
+        
+        
         self.ext = 'EXT'
-        self.file = 'edit.ini'
+        self.file = g.ueditFileName
         
         self.globalEdit = 'GLOBALEDIT'
         

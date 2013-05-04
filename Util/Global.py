@@ -25,7 +25,8 @@ class globals():
         self.uiTextWidth = 7
         self.uiTextHeight = 25        
         
-        
+        #uedit
+        self.ueditFileName = 'edit.ini'
         
         #ini
         self.configFileName = 'cfg.ini'
