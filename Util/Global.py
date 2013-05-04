@@ -17,14 +17,15 @@ class globals():
         dyn = dynLoad('cfgData', ['*'])
         ins = dyn.getClassInstance('cfgData')
         
+        self.cfgData = ins
+        
         # ui
         self.uiWidgetWidth = 5
         self.uiWidgetHeight = 3
         self.uiTextWidth = 7
         self.uiTextHeight = 25        
         
-        # install
-        self.installSourcePath = ins.installSourcePath
+        
         
         #ini
         self.configFileName = 'cfg.ini'

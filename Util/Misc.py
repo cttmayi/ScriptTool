@@ -48,7 +48,7 @@ class misc():
 
     def makeInstallTool(self, name, force = False):
         g = globals.getInstance()
-        srcPaths = g.installSourcePath
+        srcPaths = g.cfgData.installSourcePath
         dstPath = 'Tool\\'
         
         dstDir = dstPath + name

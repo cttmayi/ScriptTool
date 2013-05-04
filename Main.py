@@ -3,6 +3,7 @@
 from MainFrame import mainFrame
 from MainFrame import mainApp
 
+from Util.Global import globals
 
 class App(mainApp):
 
@@ -14,8 +15,9 @@ class App(mainApp):
 if __name__ == '__main__':
     #app = App(redirect=True,filename="mylogfile.txt")
     app = App(False)
-    
-    app.mFrame = mainFrame("Script")
+    g = globals.getInstance()
+    title = g.cfgData.scriptToolTitle    
+    app.mFrame = mainFrame(title)
     app.MainLoop()
 
 
