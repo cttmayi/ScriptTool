@@ -56,7 +56,7 @@ class misc():
             inst.setEditCfg(ext, self.__openFileEdit.getText())
         dlg.destroy()        
 
-    def makeInstallTool(self, name, force = None):
+    def makeInstallTool(self, name, force = False):
         g = globals.getInstance()
         srcPaths = g.cfgData.installSourcePath
         dstPath = 'Tool\\'
