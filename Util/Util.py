@@ -182,7 +182,7 @@ class util():
 		return attrMap
 
 	@staticmethod
-	def lgMap(strs, sp = '.'):
+	def lgMap(strs, sp = '.', prePackage = '', preClass = ''):
 		root = tree('root')
 		if not (isinstance(strs, list)):
 			strs = strs.split('\n')
@@ -194,9 +194,9 @@ class util():
 			for strp in strps:
 				if (strp != ''):
 					if (strp != end):
-						cont = cont.add(strp, None, 'package')
+						cont = cont.add(prePackage + strp, None, 'package')
 					else:
-						cont = cont.add('<class>' + strp, strline, 'class')
+						cont = cont.add(preClass + strp, strline, 'class')
 		return root
 	
 	@staticmethod
