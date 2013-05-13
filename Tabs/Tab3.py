@@ -47,7 +47,11 @@ class tabFrame(tabPanel):
 		self.line = self.line + 1
 		self.createButton("Single core", 3, self.line, 10, self.onSingleCore)
 		self.createButton("Dual core", -1, self.line, 10, self.onDualCore)		
-		self.createButton("Four Core", -1, self.line, 10, self.onFourCore)		
+		self.createButton("Four Core", -1, self.line, 10, self.onFourCore)
+		
+		self.line = self.line + 1
+		self.createButton("Open Folder", 3, self.line, 10, self.onOpenFolder)
+		self.tree = self.createTree(-1, self.line, 30, 10)
 		
 	def onStartFtrace(self):
 		self.frame.runCmdCbk("Tool\\ftrace.jb\\M-start.bat", None , self.frame.printL)
@@ -139,5 +143,12 @@ class tabFrame(tabPanel):
 	def onFourCore(self):
 		pass		
 		
-
+	def onOpenFolder(self):
+		path = self.frame.doDirDialog()
+		
+		if path != None:
+			files = util.dir2tree(path)
+			root = self.tree.addItem(None, 'root')
+			self.tree.setTree(root, files)
+		pass
 		
