@@ -274,6 +274,7 @@ class cmdThread(threading.Thread):
 		self.fun_line = fun_line
 		self.event_finish = evt_finish
 		self.fun_finish = fun_finish
+		#self.fun_finish_arg = fun_finish.func_code.co_argcount
 		self.panel = panel
 		self.popen = util.runPipe(cmd)
 		self.output_pipe =  self.popen.stdout
@@ -354,7 +355,7 @@ class cmdThread(threading.Thread):
 					break
 			if (self.event_finish):
 				evt = cmdEvent(self.event_finish, self.panel.GetId())
-				evt.setData([self.fun_finish, ''])
+				evt.setData([self.fun_finish])
 				#evt.setThread(self)
 				self.panel.GetEventHandler().AddPendingEvent(evt)
 		else :

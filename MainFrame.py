@@ -150,11 +150,14 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
-                dyn = dynLoad(menuFolder + '.' + name, ['*'])
-                ins = dyn.getClassInstance('menuFrame', self)
-                if ins.menuName == None:
-                    ins.menuName = name
-                self.menuBar.Append(ins, ins.menuName)
+                try:
+                    dyn = dynLoad(menuFolder + '.' + name, ['*'])
+                    ins = dyn.getClassInstance('menuFrame', self)
+                    if ins.menuName == None:
+                        ins.menuName = name
+                    self.menuBar.Append(ins, ins.menuName)
+                except:
+                    print 'Menu(' + name + ') error.'
 
 #tab
         self.tabFrames = {}
@@ -166,13 +169,16 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
-                dyn = dynLoad(tabFolder+'.'+name,['*'])
-                ins = dyn.getClassInstance('tabFrame', notebook, self)
-                if ins.tabName == None:
-                    ins.tabName = name
-                notebook.AddPage(ins, ins.tabName)
-                self.tabFrames[ins.tabName] = [ tabId, ins ]
-                tabId = tabId + 1
+                try:
+                    dyn = dynLoad(tabFolder+'.'+name,['*'])
+                    ins = dyn.getClassInstance('tabFrame', notebook, self)
+                    if ins.tabName == None:
+                        ins.tabName = name
+                    notebook.AddPage(ins, ins.tabName)
+                    self.tabFrames[ins.tabName] = [ tabId, ins ]
+                    tabId = tabId + 1
+                except:
+                    print 'Tab(' + name + ') error.'
         
         notebook.GetPage(0).performResume(None)
         notebook.SetSelection(0)
@@ -289,25 +295,26 @@ class mainFrame(wx.Frame):
         if (lcbk):
             EVT_CMD_LINE = wx.NewEventType()
             EVT_CMD_BINDER_LINE = wx.PyEventBinder(EVT_CMD_LINE, 1)
-            self.panel.Bind(EVT_CMD_BINDER_LINE, self.onRunCmd, self.panel)
+            self.panel.Bind(EVT_CMD_BINDER_LINE, self.__onRunCmd, self.panel)
         
         if (fcbk):
             EVT_CMD_FINISH = wx.NewEventType()
             EVT_CMD_BINDER_FINISH = wx.PyEventBinder(EVT_CMD_FINISH, 1)
-            self.panel.Bind(EVT_CMD_BINDER_FINISH, self.onRunCmd, self.panel) 
+            self.panel.Bind(EVT_CMD_BINDER_FINISH, self.__onRunCmd, self.panel) 
         
         thread = cmdThread(cmd, self.panel, EVT_CMD_FINISH, fcbk, EVT_CMD_LINE, lcbk)
         thread.start()
         #thread.join()
         return thread
         
-    def onRunCmd(self, event):
-        fun = event.getData()[0]
-        data = event.getData()[1]
-
-        fun(data)
-        
-        pass
+    def __onRunCmd(self, event):
+        edata = event.getData()
+        fun = edata[0]
+        if len(edata) == 2:
+            data = event.getData()[1]
+            fun(data)
+        else:
+            fun()
 
         
     def printW(self, text):
