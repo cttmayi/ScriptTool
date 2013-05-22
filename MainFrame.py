@@ -55,6 +55,10 @@ class mainFrame(wx.Frame):
             tmpFile.close()
             pass
 
+        tmpDir = 'Temp'
+        if not os.path.isdir(tmpDir):
+            os.makedirs(tmpDir)
+
         self.config = ConfigParser.ConfigParser()
         self.config.readfp(open(self.cfg_name, 'r'))
 

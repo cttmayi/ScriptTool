@@ -1,5 +1,6 @@
 *.pyc
 Build/
+Temp/
 Document/
 Tool/
 Main.spec
