@@ -7,6 +7,7 @@ import subprocess
 class android():
     def __init__(self):
         self.logcatPopen = None
+        self.logcatFile = None
     
     def install(self, apk):
         util.run('adb install -r ' + apk)
@@ -20,8 +21,38 @@ class android():
         logcat = subprocess.Popen(cmd, stdout=outFile, stderr=outFile, universal_newlines=False, shell=True)
 
         self.logcatPopen = logcat
+        self.logcatFile = outFile
     
     def stopLogcat(self):
         if self.logcatPopen != None:
             self.logcatPopen.terminate()
             self.logcatPopen = None
+            self.logcatFile.close()
+            self.logcatFile = None
+    
+    def filterLogcat(self, ifile, ofile, tags):
+        rfile = open(ifile, 'r')
+        wfile = open(ofile, 'w')
+        
+        for line in rfile.readlines():
+            rep = False
+            for tag in tags:
+                if line.find(tag) > -1:
+                    rep = True
+                    break
+            if rep == True:
+                wfile.write(line)
+                
+        rfile.close()
+        wfile.close()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
