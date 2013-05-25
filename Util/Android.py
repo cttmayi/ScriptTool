@@ -21,28 +21,51 @@ class android():
         logcat = subprocess.Popen(cmd, stdout=outFile, stderr=outFile, universal_newlines=False)
 
         self.logcatPopen = logcat
-        self.logcatFile = outFile
+        self.logcatFile = outFile 
+
     
     def stopLogcat(self):
         if self.logcatPopen != None:
             self.logcatPopen.terminate()
-            print 'stop'
             self.logcatPopen = None
             self.logcatFile.close()
             self.logcatFile = None
+            return True
+        return False
     
-    def filterLogcat(self, ifile, ofile, tags):
+    def touchLogcat(self):
+#        if self.logcatFile != None:
+#            self.logcatFile.write('>>> >>>\n')
+        pass
+        
+    def filterLogcat(self, ifile, ofile, tags, pids = None):
         rfile = open(ifile, 'r')
         lines = rfile.readlines()
         rfile.close()
         
+        for i in range(len(tags)):
+            tags[i] = tags[i] + ':'
+        
+        
         wfile = open(ofile, 'w')
         for line in lines:
-            rep = False
-            for tag in tags:
-                if line.find(tag) > -1:
-                    rep = True
-                    break
+            words = line.split(None, 5)
+            if len(words) == 6:
+                rep = False
+                for tag in tags:
+                    #if line.find(tag) > -1:
+                    if words[5] == tag: 
+                        rep = True
+                        break
+                if pids != None and rep == False:     
+                    for pid in pids:
+                        #if line.find(tag) > -1:
+                        if words[3] == pid: 
+                            rep = True
+                            break
+                    
+            else:
+                rep = True
             if rep == True:
                 line = line.replace('\r', '')
                 wfile.write(line)
