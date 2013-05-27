@@ -16,7 +16,7 @@ class tabFrame(tabPanel):
         self.createButton('logcat touch', -1, 2, 10, self.onLogcatTouch)
         
         
-        self.ar = android()
+        self.ar = android(self.frame)
         pass
     
     def onLogcat(self):

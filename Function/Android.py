@@ -5,9 +5,10 @@ import subprocess
 
 
 class android():
-    def __init__(self):
-        self.logcatPopen = None
+    def __init__(self, frame):
+        self.logcatThread = None
         self.logcatFile = None
+        self.frame = frame
     
     def install(self, apk):
         util.run('adb install -r ' + apk)
@@ -18,24 +19,32 @@ class android():
     def startLogcat(self, wfile):
         outFile =  open(wfile, 'w')
         cmd = 'adb logcat -v threadtime'
-        logcat = subprocess.Popen(cmd, stdout=outFile, stderr=outFile, universal_newlines=False)
 
-        self.logcatPopen = logcat
-        self.logcatFile = outFile 
+        logcatThread = self.frame.runCmdCbk(cmd, None, self.__onLogcatLine)
+
+        self.logcatThread = logcatThread
+        self.logcatFile = outFile
+
+
+    def __onLogcatLine(self, line):
+        if self.logcatFile != None:
+            line = line.replace('\r', '')
+            self.logcatFile.write(line)
+        
 
     
     def stopLogcat(self):
-        if self.logcatPopen != None:
-            self.logcatPopen.terminate()
-            self.logcatPopen = None
+        if self.logcatThread != None:
+            self.logcatThread.stop()
+            self.logcatThread = None
             self.logcatFile.close()
             self.logcatFile = None
             return True
         return False
     
     def touchLogcat(self):
-#        if self.logcatFile != None:
-#            self.logcatFile.write('>>> >>>\n')
+        if self.logcatFile != None:
+            self.logcatFile.write('>>> >>>\n')
         pass
         
     def filterLogcat(self, ifile, ofile, tags, pids = None):
@@ -49,9 +58,10 @@ class android():
         
         wfile = open(ofile, 'w')
         for line in lines:
-            words = line.split(None, 5)
-            if len(words) == 6:
+            words = line.split(None, 6)
+            if len(words) == 7:
                 rep = False
+
                 for tag in tags:
                     #if line.find(tag) > -1:
                     if words[5] == tag: 

@@ -14,5 +14,8 @@ mkdir .\dist\Main\Tabs\Modules
 copy ..\Tabs\Modules\*.py .\dist\Main\Tabs\Modules
 rem mkdir .\dist\Main\Util\
 rem copy ..\Util\*.py .\dist\Main\Util\
+mkdir .\dist\Main\Function
+copy ..\Util\*.py .\dist\Main\Function
+
 
 rm -r .\dist\Main\include
