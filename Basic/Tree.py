@@ -94,27 +94,27 @@ class tree(wx.TreeCtrl):
 
     def setSelAction(self, action):
         self.sclick_cbk = action
-        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.onSClickAction)
+        self.Bind(wx.EVT_TREE_SEL_CHANGED, self.__onSClickAction)
             
-    def onSClickAction(self, event):
+    def __onSClickAction(self, event):
         if self.sclick_cbk != None:
             self.sclick_cbk()
         event.Skip()
 
     def setDClickAction(self, action):
         self.dclick_cbk = action
-        self.Bind(wx.EVT_LEFT_DCLICK, self.onDClickAction)
+        self.Bind(wx.EVT_LEFT_DCLICK, self.__onDClickAction)
             
-    def onDClickAction(self, event):
+    def __onDClickAction(self, event):
         if self.dclick_cbk != None:
             self.dclick_cbk()
         event.Skip()
     
     def setExpandAction(self, action):
             self.eclick_cbk = action
-            self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.onEClickAction)
+            self.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.__onEClickAction)
     
-    def onEClickAction(self, event):
+    def __onEClickAction(self, event):
         if self.eclick_cbk != None:
             item = self.getEventItem(event)
             self.eclick_cbk(item)
