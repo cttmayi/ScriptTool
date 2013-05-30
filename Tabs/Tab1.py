@@ -61,6 +61,7 @@ class tabFrame(tabPanel):
         table.insertItem(2, ['5','5'])
         table.insertItem(2, ['6','6'])
         table.setItem(2, 0, 'A')
+        print table.getItemCount()
         
         #table.deleteItem()
         table.setRClickAction(self.onTreeRightClick)

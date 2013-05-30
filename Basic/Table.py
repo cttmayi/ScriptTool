@@ -30,7 +30,7 @@ class table(wx.ListCtrl):
         return item.GetText()
 
     def getItemCount(self):
-        return self.GetColumnCount()
+        return self.GetItemCount()
 
     
     def insertItem(self, row, datas):
