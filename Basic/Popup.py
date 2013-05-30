@@ -34,8 +34,8 @@ class popup(wx.Menu):
 #        return tid
         
     def show(self):
-        self.panel.frame.sendMessage(self.onShow, None)
+        self.panel.frame.sendMessage(self.__onShow, None)
         #self.panel.PopupMenu(self)
         
-    def onShow(self, data):
+    def __onShow(self, data):
         self.panel.PopupMenu(self)
