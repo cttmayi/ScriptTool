@@ -29,6 +29,9 @@ class table(wx.ListCtrl):
         item = self.GetItem(row, col)
         return item.GetText()
 
+    def getItemCount(self):
+        return self.GetColumnCount()
+
     
     def insertItem(self, row, datas):
         index = self.InsertStringItem(row, datas[0])
@@ -59,9 +62,9 @@ class table(wx.ListCtrl):
             
     def setRClickAction(self, action):
         self.rclick_cbk = action
-        self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.onRClickAction)
+        self.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self.__onRClickAction)
             
-    def onRClickAction(self, event):
+    def __onRClickAction(self, event):
         if self.rclick_cbk != None:
             self.rclick_cbk()
         event.Skip()            
