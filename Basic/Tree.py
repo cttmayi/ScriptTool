@@ -78,16 +78,24 @@ class tree(wx.TreeCtrl):
         return data
     
     def setItemData(self, item, data):
-        attr = self.GetItemPyData(item)[1]
-        self.SetItemPyData([data, attr])
+        pyData = self.GetItemPyData(item)
+        if pyData == None:
+            attr = None
+        else:
+            attr = pyData[1]
+        self.SetItemPyData(item, [data, attr])
 
     def getItemAttr(self, item):
         attr = self.GetItemPyData(item)[1]
         return attr         
 
     def setItemAttr(self, item, attr):
-        data = self.GetItemPyData(item)[0]
-        self.SetItemPyData([data, attr])
+        pyData = self.GetItemPyData(item)
+        if pyData == None:
+            data = None
+        else:
+            data = pyData[0]
+        self.SetItemPyData(item, [data, attr])
 
     def expandItem(self, item = None):
         if (item == None):
