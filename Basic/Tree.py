@@ -3,6 +3,9 @@ import wx
 class tree(wx.TreeCtrl):
     def __init__(self, panel, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.TR_DEFAULT_STYLE):
         wx.TreeCtrl.__init__(self, panel, -1, pos, size, style)
+        self.rclick_cbk = None
+        self.rpclick_popups = {}
+        self.rpclick_popup = None
         pass
 
     def addItem(self, root, name, data = None, attr = None):
@@ -127,9 +130,30 @@ class tree(wx.TreeCtrl):
     def __onRClickAction(self, event):
         item = event.GetItem()
         self.SelectItem(item)
-        if self.rclick_cbk != None:
-            self.rclick_cbk()
+        attr = self.getItemAttr(item)
+        runFinish = False
+        
+        if (attr != None and self.rpclick_popups.has_key(attr)):
+            self.rpclick_popups[attr].show()
+            runFinish = True
+        
+        if (runFinish == False):
+            if self.rpclick_popup != None:
+                self.rpclick_popup.show()
+                runFinish = True
+        
+        if (runFinish == False):
+            if self.rclick_cbk != None:
+                self.rclick_cbk()
+                runFinish = True
         event.Skip()
+
+    def setRClickPopup(self, popup, attr = None):
+        if attr == None:
+            self.rpclick_popup = popup
+        else:
+            self.rpclick_popups[attr] = popup
+        self.Bind(wx.EVT_TREE_ITEM_RIGHT_CLICK, self.__onRClickAction)
 
 
     def getEventItem(self, event):

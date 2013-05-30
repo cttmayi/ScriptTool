@@ -45,10 +45,9 @@ class tabFrame(tabPanel):
         
         #self.tree.setSelAction(self.OnSelChanged)
         self.tree.setExpandAction(self.OnExpand)
-        self.tree.setRClickAction(self.onTreeRightClick)
+        #self.tree.setRClickAction(self.onTreeRightClick)
         #self.tree.expandItem(root)
         #self.tree.expandTreeItem(item)
-        
         #self.tree.deleteTreeItem(item)
         
         table = self.createTable(-1, 2, int(self.getDisplayWidth()/2), 10, ['A','B','C'])
@@ -86,6 +85,8 @@ class tabFrame(tabPanel):
         self.popupA = self.createPopupMenu()
         self.popupA.addItem("A", self.onPopupA_A)
         self.popupA.addItem("B", self.onPopupA_B)
+        
+        self.tree.setRClickPopup(self.popupA)
         
         
         #self.popupB = self.createPopupMenu()
