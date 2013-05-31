@@ -30,7 +30,7 @@ class module(Basic.Panel.panel):
         w = self.width + self.__WIDGET_W - x
         h = self.height + self.__WIDGET_H * 2 - y
         
-        wx.StaticBox(self.panel, -1, self.moduleName, pos=(x,y), size=(w,h))
+        wx.StaticBox(self.panel, -1, self.moduleName, pos=(x, y), size=(w, h))
         
         tab.getMaxPosition(x, y, w, h)
         

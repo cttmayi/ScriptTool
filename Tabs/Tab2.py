@@ -10,7 +10,7 @@ class tabFrame(tabPanel):
     def onCreate(self):
         #self.setFramePosition(600)
         self.addModule('Module1', 1, 1)
-        self.addModule('Logcat', 1, 13)
+        self.addModule('Logcat', 1, -1)
         
         pass
     

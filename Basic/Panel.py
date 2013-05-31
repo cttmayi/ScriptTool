@@ -70,12 +70,19 @@ class panel():
         x = x + self.offset_x
         return x
     
+    def getPosX(self, x, w):
+        return self.__GET_POS(x, w)
+    
     def __GET_POS_Y(self, y, h):
         if (y < 0):
             y = self.__CURRENT_Y
         self.__CURRENT_Y = y + h
         y = y + self.offset_y
         return y
+    
+    def getPosY(self, y, h):
+        return self.__GET_POS_Y(y, h)
+    
     
     def __GET_POS_SIZE(self, x, y, w, h):
         x = self.__WIDGET_W + self.__TEXT_W * x

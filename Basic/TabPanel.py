@@ -2,8 +2,11 @@ import wx
 import Basic.Panel
 from Util.Util import dynLoad
 
+from Util.Global import globals
+
 #for build
 from Basic.Module import module
+
 
 ########################################################################
 class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
@@ -15,7 +18,12 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         self.tabName = None
         self.frameHeight = None
         self.isCreated = False
-
+        
+        g = globals.getInstance()
+        self.__WIDGET_H = g.uiWidgetHeight
+        self.__WIDGET_W = g.uiWidgetWidth
+        self.__TEXT_H = g.uiTextHeight
+        self.__TEXT_W = g.uiTextWidth
 
     def performCreate(self):
         self.onCreate()
@@ -31,7 +39,12 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
     def addModule(self, name, x, y):
         moduleFolder = 'Tabs.Modules'
         dyn = dynLoad(moduleFolder+'.'+name,['*'])
+        x = self.getPosX(x, 0)
+        y = self.getPosY(y, 0)
         ins = dyn.getClassInstance('moduleFrame', self, name, (x, y))
+        self.getPosX(x, int(ins.width/self.__TEXT_W))
+        self.getPosY(y, int(ins.height/self.__TEXT_H))
+        
         return ins
     
     def openTab(self, name, data):
