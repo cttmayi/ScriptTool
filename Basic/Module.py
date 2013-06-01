@@ -16,7 +16,7 @@ class module(Basic.Panel.panel):
         self.__TEXT_W = g.uiTextWidth        
         
         Basic.Panel.panel.__init__(self, tab.frame, tab, (pos[0], pos[1]+1))
-        self.moduleName = name
+        self.__moduleName = name
         self.width = None
         self.height = None
         self.onCreate()
@@ -30,7 +30,7 @@ class module(Basic.Panel.panel):
         w = self.width + self.__WIDGET_W - x
         h = self.height + self.__WIDGET_H * 2 - y
         
-        wx.StaticBox(self.panel, -1, self.moduleName, pos=(x, y), size=(w, h))
+        wx.StaticBox(self.panel, -1, self.__moduleName, pos=(x, y), size=(w, h))
         
         tab.getMaxPosition(x, y, w, h)
         
