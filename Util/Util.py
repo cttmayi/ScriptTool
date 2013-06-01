@@ -239,6 +239,20 @@ class util():
 		return ret
 	
 	
+	
+	
+	@staticmethod
+	def JoinFileSubName(fileName, subName):
+		'''
+		input: Temp\Log.log ams
+		output: Temp\Log_ams.log
+		'''
+		
+		Filedir = os.path.dirname(fileName)
+		p = os.path.basename(fileName)
+		[f, e] = os.path.splitext(p)
+		filePath = os.path.join(Filedir, f  + '_' + subName + e)
+		return filePath
 
 
 class dynLoad():

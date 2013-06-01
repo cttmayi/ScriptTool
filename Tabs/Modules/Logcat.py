@@ -1,6 +1,8 @@
 
+
 from Basic.Module import module
 from Util.Misc import misc
+from Util.Util import util
 
 from Function.Android import android
 
@@ -13,6 +15,8 @@ class moduleFrame(module):
 
         self.modules = [['ActivityManager'],
                   ['WindowManager']]
+
+        self.moduleNames = ['AMS', 'WMS']
 
         self.files = ['Temp\\ams.log',
                  'Temp\\wms.log']
@@ -52,8 +56,9 @@ class moduleFrame(module):
     
     def onShowLogcat(self, mid):
         if self.logcatFile != None and self.logcatFinish == True:
-            self.ar.filterLogcat(self.logcatFile, self.files[mid], self.modules[mid])
+            filePath = util.JoinFileSubName(self.logcatFile, self.moduleNames[mid])
+            self.ar.filterLogcat(self.logcatFile, filePath, self.modules[mid])
             inst = misc.getInstance()
-            inst.openFile(self.files[mid], 'log')
+            inst.openFile(filePath, 'log')
             
 
