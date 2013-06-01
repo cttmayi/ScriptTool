@@ -16,6 +16,10 @@ class android():
     def uninstall(self, apk):
         pass
     
+    def clearLogcat(self):
+        cmd = 'adb logcat -c'
+        util.run(cmd)
+    
     def startLogcat(self, wfile):
         outFile =  open(wfile, 'w')
         cmd = 'adb logcat -v threadtime'
