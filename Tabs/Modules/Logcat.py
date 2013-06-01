@@ -13,17 +13,15 @@ class moduleFrame(module):
         self.createButton('touch', -1, 0, 10, self.onLogcatTouch)
         self.createButton('open', -1, 0, 10, self.onLogcatOpen)
 
-        self.modules = [['ActivityManager'],
+        self.moduleTags = [['ActivityManager'],
                   ['WindowManager']]
 
         self.moduleNames = ['AMS', 'WMS']
-
-        self.files = ['Temp\\ams.log',
-                 'Temp\\wms.log']
         
         self.createButton('all', 1, 1, 10, self.onShowLogcatAll)
-        self.createButton('ams', -1, 1, 10, self.onShowLogcat, 0)
-        self.createButton('wms', -1, 1, 10, self.onShowLogcat, 1)
+        for i in range(len(self.moduleNames)):
+            self.createButton(self.moduleNames[i], -1, 1, 10, self.onShowLogcat, i)
+
         
         self.ar = android(self.frame)
 
@@ -57,7 +55,7 @@ class moduleFrame(module):
     def onShowLogcat(self, mid):
         if self.logcatFile != None and self.logcatFinish == True:
             filePath = util.JoinFileSubName(self.logcatFile, self.moduleNames[mid])
-            self.ar.filterLogcat(self.logcatFile, filePath, self.modules[mid])
+            self.ar.filterLogcat(self.logcatFile, filePath, self.moduleTags[mid])
             inst = misc.getInstance()
             inst.openFile(filePath, 'log')
             
