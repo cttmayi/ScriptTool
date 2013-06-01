@@ -29,7 +29,7 @@ class moduleFrame(module):
     def onLogcatStart(self):
         self.logcatFile = 'Temp\\log.log'
         self.logcatFinish = False
-        self.clearLogcat()
+        self.ar.clearLogcat()
         self.ar.startLogcat(self.logcatFile)
         
     def onLogcatOpen(self):
