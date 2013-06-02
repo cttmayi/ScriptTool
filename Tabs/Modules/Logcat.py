@@ -22,6 +22,13 @@ class moduleFrame(module):
         for i in range(len(self.moduleNames)):
             self.createButton(self.moduleNames[i], -1, 1, 10, self.onShowLogcat, i)
 
+        self.createStatic('pid:', 1, 2)
+        self.pidEdit = self.createEdit(-1, 2, 7)
+        self.createStatic('tag:', -1, 2)
+        self.tagEdit = self.createEdit(-1, 2, 15)        
+        self.createButton('show', -1, 2, 10, self.onShowCustomLogcat)
+        
+        self.moduleCbox = self.createCheckbox(1, 3, 20, self.moduleNames,len(self.moduleNames))
         
         self.ar = android(self.frame)
 
@@ -58,5 +65,25 @@ class moduleFrame(module):
             self.ar.filterLogcat(self.logcatFile, filePath, self.moduleTags[mid])
             inst = misc.getInstance()
             inst.openFile(filePath, 'log')
+    
+    def onShowCustomLogcat(self):
+        if self.logcatFile != None and self.logcatFinish == True:
+            pid = self.pidEdit.getText()
+            if pid == '':
+                pid = None
             
+            tag = self.tagEdit.getText()
+            tags = []
+            if tag != '':
+                tags = tags + [tag]
+            
+            for i in range(len(self.moduleNames)):
+                if self.moduleCbox.getSel(i):
+                    tags = tags + self.moduleTags[i]
+            
+            if len(tags) != 0 or pid != None:
+                filePath = util.JoinFileSubName(self.logcatFile, 'cur')
+                self.ar.filterLogcat(self.logcatFile, filePath, tags, pid)
+                inst = misc.getInstance()
+                inst.openFile(filePath, 'log')
 
