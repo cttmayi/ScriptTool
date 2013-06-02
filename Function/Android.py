@@ -57,7 +57,8 @@ class android():
         rfile.close()
         
         for i in range(len(tags)):
-            tags[i] = tags[i] + ':'
+            if len(tags[i]) > 7:
+                tags[i] = tags[i] + ':'
         
         
         wfile = open(ofile, 'w')
