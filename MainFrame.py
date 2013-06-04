@@ -163,6 +163,10 @@ class mainFrame(wx.Frame):
                 except:
                     print 'Menu(' + name + ') error.'
 
+        menuHelp = wx.Menu()
+        menuHelp.Append(-1, 'v1.00')
+        self.menuBar.Append(menuHelp, 'Help')
+        
 #tab
         self.tabFrames = {}
         tabId = 0
