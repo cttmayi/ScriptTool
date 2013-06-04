@@ -3,8 +3,6 @@ from Basic.TabPanel import tabPanel
 
 from Util.Misc import misc
 
-from Function.Android import android
-
 class tabFrame(tabPanel):
 
     def onCreate(self):

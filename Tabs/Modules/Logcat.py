@@ -14,9 +14,10 @@ class moduleFrame(module):
         self.createButton('open', -1, 0, 10, self.onLogcatOpen)
 
         self.moduleTags = [['ActivityManager'],
-                  ['WindowManager']]
+                  ['WindowManager'],
+                  ['ViewRootImp', 'View']]
 
-        self.moduleNames = ['AMS', 'WMS']
+        self.moduleNames = ['AMS', 'WMS', 'VIEW']
         
         self.createButton('all', 1, 1, 10, self.onShowLogcatAll)
         for i in range(len(self.moduleNames)):
@@ -80,6 +81,7 @@ class moduleFrame(module):
             for i in range(len(self.moduleNames)):
                 if self.moduleCbox.getSel(i):
                     tags = tags + self.moduleTags[i]
+            print tags
             
             if len(tags) != 0 or pid != None:
                 filePath = util.JoinFileSubName(self.logcatFile, 'cur')
