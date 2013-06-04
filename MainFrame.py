@@ -182,9 +182,10 @@ class mainFrame(wx.Frame):
                     notebook.AddPage(ins, ins.tabName)
                     self.tabFrames[ins.tabName] = [ tabId, ins ]
                     tabId = tabId + 1
-                except:
+                except Exception as e:
                     ins.Destroy()
                     print 'Tab(' + name + ') error.'
+                    print e
         
         notebook.GetPage(0).performResume(None)
         notebook.SetSelection(0)
