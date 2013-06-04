@@ -31,7 +31,8 @@ class dialog(wx.Dialog):
         label = wx.StaticText(self, -1, text, size = (self.width, -1))
         box.Add(label, 0, wx.ALIGN_CENTRE|wx.ALL, 5)
 
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        #self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.EXPAND|wx.ALL, 0)
         
         return text    
       
@@ -45,7 +46,8 @@ class dialog(wx.Dialog):
         #text.SetHelpText("Here's some help text for field #1")
         box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
 
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        #self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.EXPAND|wx.ALL, 0)
         
         return text
     
@@ -55,7 +57,8 @@ class dialog(wx.Dialog):
         btn = button(self, text, (0, 0), (self.width, -1), cbk)
         box.Add(btn, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
 
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        #self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.EXPAND|wx.ALL, 0)
         
         return text
     
@@ -69,7 +72,8 @@ class dialog(wx.Dialog):
         text = combo(self, (0, 0), clist)
         box.Add(text, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
 
-        self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        #self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(box, 0, wx.EXPAND|wx.ALL, 0)
         
         return text
                 
@@ -86,7 +90,8 @@ class dialog(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
         
-        self.sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        #self.sizer.Add(btnsizer, 0, wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)
+        self.sizer.Add(btnsizer, 0, wx.EXPAND|wx.ALL, 1)
         
         self.SetSizer(self.sizer)
         self.sizer.Fit(self) 
