@@ -64,7 +64,7 @@ class android():
         wfile = open(ofile, 'w')
         for line in lines:
             words = line.split(None, 6)
-            if len(words) == 7:
+            if len(words) > 5:
                 rep = False
 
                 for tag in tags:
