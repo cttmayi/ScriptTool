@@ -38,7 +38,7 @@ class table(wx.ListCtrl):
         for i in range(1, len(datas)):
             self.SetStringItem(index, i, datas[i])
     
-    def setItem(self, row, col, data):
+    def setItemText(self, row, col, data):
         self.SetStringItem(row, col, data)
         
     def deleteItem(self, rows = None):
