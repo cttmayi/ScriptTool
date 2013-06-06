@@ -30,6 +30,7 @@ class tabFrame(tabPanel):
         self.createButton('timer stop',8, -1, 15, self.onTimerStop)
         self.createButton('goto tab2',8, -1, 15, self.onGotoTab2)
         self.createButton('util',8, -1, 15, self.onUtil)
+        self.btnSet = self.createButton('Button.reset', 8, -1, 15, self.btnReset)
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -60,7 +61,7 @@ class tabFrame(tabPanel):
         table.insertItem(2, ['S','S'])
         table.insertItem(2, ['5','5'])
         table.insertItem(2, ['6','6'])
-        table.setItem(2, 0, 'A')
+        table.setItemText(2, 0, 'A')
         
         #table.deleteItem()
         table.setRClickAction(self.onTreeRightClick)
@@ -321,6 +322,10 @@ class tabFrame(tabPanel):
         r.show()
         
         pass
+    
+    def btnReset(self):
+        self.btnSet.reset('Set')
+        self.sel.reset(['A','B'])
     
     def onTimer(self, e):
         self.frame.printL('onTimer')

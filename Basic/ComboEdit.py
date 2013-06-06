@@ -25,8 +25,6 @@ class comboEdit(wx.ComboBox):
         
     def deleteItem(self, cid):
         self.Delete(cid)
-    
-    
         
     def onEnter(self, event):
         #self.enter_cbk..func_code.co_varnames

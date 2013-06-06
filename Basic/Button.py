@@ -16,7 +16,11 @@ class button(wx.Button):
         else:
             self.click_cbk(self.bid)
         event.Skip()
-        
+    
+    def reset(self, name, cbk = None):
+        self.SetLabel(name)
+        if cbk != None:
+            self.click_cbk = cbk
         
     def setEnable(self, enable):
         self.Enable(enable)
