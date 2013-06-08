@@ -168,10 +168,9 @@ class panel():
             x = self.__GET_POS(x, w)
         return wdt
     
-    def createEdit(self, x, y, w, h = 1, tid = 0):
+    def createEdit(self, x, y, w, h = 1, arg = None):
         """创建  编辑框(Edit)
         """
-        
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         
@@ -185,11 +184,11 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
                 
-        wdt = edit(self.panel, (x, y), (w, h), style, tid)
+        wdt = edit(self.panel, (x, y), (w, h), style, arg)
         
         return wdt
 
-    def createButton(self, text, x, y, w, cbk, _id = 0):
+    def createButton(self, text, x, y, w, cbk, arg = None):
         """创建按钮(Button)
         """
         h = 1
@@ -198,11 +197,11 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        wdt = button(self.panel, text, (x, y), (w, h), cbk, _id)
+        wdt = button(self.panel, text, (x, y), (w, h), cbk, arg)
         return wdt
         
-    def createCombo(self, x, y, lists, edit = False):
-        w = len(lists[0])+3
+    def createCombo(self, x, y, cblist):
+        w = len(cblist[0])+3
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
@@ -211,17 +210,17 @@ class panel():
         
         #style = wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER
         
-        wdt = combo(self.panel, (x, y), lists)
+        wdt = combo(self.panel, (x, y), cblist)
         return wdt
 
-    def createComboEdit(self, x, y, w, _list = []):
+    def createComboEdit(self, x, y, w, cblist = []):
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        wdt = comboEdit(self.panel, (x, y), (w, h), _list)
+        wdt = comboEdit(self.panel, (x, y), (w, h), cblist)
         return wdt
 
     def createGauge(self, x, y, w):
@@ -240,10 +239,10 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        _tree = tree(self.panel)
-        _tree.SetDimensions(x, y, w, h)
+        treeCtrl = tree(self.panel)
+        treeCtrl.SetDimensions(x, y, w, h)
         
-        return _tree
+        return treeCtrl
         
     def createTable(self, x, y, w, h, columns):
         """ 创建表格(Table)
@@ -254,12 +253,12 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        _table = table(self.panel, pos = [x, y], size = [w, h])
+        tableList = table(self.panel, pos = [x, y], size = [w, h])
         for i in range(len(columns)):
-            _table.InsertColumn(i, columns[i])
-        return _table
+            tableList.InsertColumn(i, columns[i])
+        return tableList
 
-    def createCheckbox(self, x, y, w, names, col=1):
+    def createCheckbox(self, x, y, w, names, col = 1):
         h = math.floor(len(names)/col)
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
@@ -269,14 +268,14 @@ class panel():
         cb = checkboxs(self.panel, names, (x, y),(w, h), col)
         return cb
 
-    def createRadiobox(self, x, y, name, slist):
+    def createRadiobox(self, x, y, name, rlist):
         w = 1
         h = 1
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
         rpos = self.__GET_POS_SIZE(x, y, w, h)
         
-        rb = radiobox(self.panel, name, slist, (rpos[0], rpos[1]))
+        rb = radiobox(self.panel, name, rlist, (rpos[0], rpos[1]))
         size = rb.GetSize()
         w = self.__GET_WIDTH(size[0])
         x = self.__GET_POS(x, w)
@@ -291,8 +290,8 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        _bitmap = bitmap(self.panel, pos = (x, y), size = (w, h))
-        return _bitmap
+        stBitmap = bitmap(self.panel, pos = (x, y), size = (w, h))
+        return stBitmap
     
     
     def createTab(self, x, y, w, h):
@@ -301,8 +300,8 @@ class panel():
         [x, y, w, h] = self.__GET_POS_SIZE(x, y, w, h)
         self.__GET_MAX(x, y, w, h)
         
-        _tab = tab(self.panel, (x, y), (w, h))
-        return _tab
+        tabBook = tab(self.panel, (x, y), (w, h))
+        return tabBook
     
     
     def createDialog(self, title, w):
@@ -311,8 +310,8 @@ class panel():
         return wdt
     
     def createPopupMenu(self):
-        _popup = popup(self.panel)
-        return _popup
+        popupMenu = popup(self.panel)
+        return popupMenu
     
 #    def setRClickAction(self, action):
 #        self.Bind(wx.EVT_CONTEXT_MENU, action)

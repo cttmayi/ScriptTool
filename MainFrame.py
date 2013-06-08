@@ -154,14 +154,14 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
-                try:
+ #               try:
                     dyn = dynLoad(menuFolder + '.' + name, ['*'])
                     ins = dyn.getClassInstance('menuFrame', self)
                     if ins.menuName == None:
                         ins.menuName = name
                     self.menuBar.Append(ins, ins.menuName)
-                except:
-                    print 'Menu(' + name + ') error.'
+#                except:
+#                    print 'Menu(' + name + ') error.'
 
         menuHelp = wx.Menu()
         menuHelp.Append(-1, 'v1.00')
@@ -177,19 +177,19 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
-                try:
-                    dyn = dynLoad(tabFolder+'.'+name,['*'])
-                    ins = dyn.getClassInstance('tabFrame', notebook, self)
-                    ins.performCreate()
-                    if ins.tabName == None:
-                        ins.tabName = name
-                    notebook.AddPage(ins, ins.tabName)
-                    self.tabFrames[ins.tabName] = [ tabId, ins ]
-                    tabId = tabId + 1
-                except Exception as e:
-                    ins.Destroy()
-                    print 'Tab(' + name + ') error.'
-                    print e
+ #               try:
+                dyn = dynLoad(tabFolder+'.'+name,['*'])
+                ins = dyn.getClassInstance('tabFrame', notebook, self)
+                ins.performCreate()
+                if ins.tabName == None:
+                    ins.tabName = name
+                notebook.AddPage(ins, ins.tabName)
+                self.tabFrames[ins.tabName] = [ tabId, ins ]
+                tabId = tabId + 1
+  #              except Exception as e:
+  #                  ins.Destroy()
+  #                  print 'Tab(' + name + ') error.'
+  #                  print e
         
         notebook.GetPage(0).performResume(None)
         notebook.SetSelection(0)

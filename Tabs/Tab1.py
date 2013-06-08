@@ -14,6 +14,7 @@ class tabFrame(tabPanel):
         #colors = ["red", "blue", "gray", "yellow", "green"]
         self.SetBackgroundColour("gray")
         
+        self.createStatic("Name:", 1, 1)
         self.createStatic("Name:", 2, 2)
         
         self.createButton("RunCmdCbk", 8, 2, 15, self.OnClickRunCmdCbk)

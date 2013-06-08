@@ -2,9 +2,9 @@ import wx
 
 
 class edit(wx.TextCtrl):
-    def __init__(self, panel, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.TR_DEFAULT_STYLE, tid = 0):
+    def __init__(self, panel, pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.TR_DEFAULT_STYLE, arg = None):
         self.panel = panel
-        self.tid = tid
+        self.arg = arg
         wx.TextCtrl.__init__(self, panel, -1, "", pos=pos, size=size, style=style)
     
     
@@ -30,7 +30,7 @@ class edit(wx.TextCtrl):
         if self.enter_cbk.func_code.co_argcount == 1:
             self.enter_cbk()
         else:
-            self.enter_cbk(self.tid)
+            self.enter_cbk(self.arg)
 
     def setChangeAction(self, cbk):
         self.change_cbk = cbk
@@ -40,7 +40,7 @@ class edit(wx.TextCtrl):
         if self.change_cbk.func_code.co_argcount == 1:
             self.change_cbk()
         else:
-            self.change_cbk(self.tid)
+            self.change_cbk(self.arg)
             
     def destory(self):
         self.Destroy()

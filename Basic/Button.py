@@ -2,19 +2,19 @@
 import wx
 
 class button(wx.Button):
-    def __init__(self, panel, text, pos, size, cbk = None, bid = 0):
+    def __init__(self, panel, text, pos, size, cbk = None, arg = None):
         wx.Button.__init__(self, panel, -1, text, pos=pos, size=size)
         if (cbk != None):
             self.Bind(wx.EVT_BUTTON, self.__onClick, self)
         self.click_cbk = cbk
-        self.bid = bid
+        self.arg = arg
         
         
     def __onClick(self, event):
         if self.click_cbk.func_code.co_argcount == 1:
             self.click_cbk()
         else:
-            self.click_cbk(self.bid)
+            self.click_cbk(self.arg)
         event.Skip()
     
     def reset(self, name, cbk = None):
