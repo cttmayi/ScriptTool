@@ -243,11 +243,8 @@ class util():
 			s = s + 1
 		return ret
 	
-	
-	
-	
 	@staticmethod
-	def JoinFileSubName(fileName, subName):
+	def joinFileSubName(fileName, subName):
 		'''
 		input: Temp\Log.log ams
 		output: Temp\Log_ams.log
@@ -258,6 +255,21 @@ class util():
 		[f, e] = os.path.splitext(p)
 		filePath = os.path.join(Filedir, f  + '_' + subName + e)
 		return filePath
+	
+	@staticmethod
+	def grep(inFile, names):
+		ret = []
+		fp = open(inFile, 'r')
+		n = 0
+		for line in fp.readlines():
+			n = n + 1
+			for name in names:
+				if line.find(name) > -1:
+					ret.append([name, inFile, n, line])
+					
+		if len(ret) == 0:
+			ret = None
+		return ret
 
 
 class dynLoad():

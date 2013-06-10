@@ -62,7 +62,7 @@ class moduleFrame(module):
     
     def onShowLogcat(self, mid):
         if self.logcatFile != None and self.logcatFinish == True:
-            filePath = util.JoinFileSubName(self.logcatFile, self.moduleNames[mid])
+            filePath = util.joinFileSubName(self.logcatFile, self.moduleNames[mid])
             self.ar.filterLogcat(self.logcatFile, filePath, self.moduleTags[mid])
             inst = misc.getInstance()
             inst.openFile(filePath, 'log')
@@ -84,7 +84,7 @@ class moduleFrame(module):
             print tags
             
             if len(tags) != 0 or pid != None:
-                filePath = util.JoinFileSubName(self.logcatFile, 'cur')
+                filePath = util.joinFileSubName(self.logcatFile, 'cur')
                 self.ar.filterLogcat(self.logcatFile, filePath, tags, pid)
                 inst = misc.getInstance()
                 inst.openFile(filePath, 'log')
