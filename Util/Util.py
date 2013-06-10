@@ -67,7 +67,7 @@ class util():
 	
 	
 	@staticmethod
-	def listfile(dirname, full = True):
+	def listfile(dirname, IsFullName = True, isRecursion = False):
 		files = []
 		try:
 			ls=os.listdir(dirname)
@@ -78,10 +78,15 @@ class util():
 			for l in ls:
 				filename = os.path.join(dirname,l)
 				if( not os.path.isdir(filename)):
-					if full == True:
+					if IsFullName == True:
 						files.append(filename)
 					else:
 						files.append(l)
+				else:
+					if isRecursion:
+						rec = util.listfile(filename, IsFullName, isRecursion)
+						files = files + rec
+					
 		return files
 	
 	@staticmethod
