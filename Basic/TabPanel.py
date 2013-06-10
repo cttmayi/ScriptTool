@@ -43,7 +43,7 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         y = self.getPosY(y, 0)
         ins = dyn.getClassInstance('moduleFrame', self, name, (x, y))
         self.getPosX(x, int(ins.width/self.__TEXT_W))
-        self.getPosY(y, int(ins.height/self.__TEXT_H))
+        self.getPosY(y, int(ins.height/self.__TEXT_H) - y + 1)
         
         return ins
     
