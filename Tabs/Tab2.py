@@ -19,7 +19,6 @@ class tabFrame(tabPanel):
         
         if path != None:
             fileList = util.listFile(path, True, True)
-            
             for inFile in fileList:
                 inFile = os.path.join(path, inFile)
                 g = util.grep(inFile, ['com.google.android.maps', 'getDeviceId'])
