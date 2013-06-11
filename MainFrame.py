@@ -150,7 +150,7 @@ class mainFrame(wx.Frame):
 
 #menu
         menuFolder = 'Menus'
-        files = util.listfile(menuFolder)
+        files = util.listFile(menuFolder)
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
@@ -172,7 +172,7 @@ class mainFrame(wx.Frame):
         tabId = 0
         notebook = wx.Notebook(self.panel)
         tabFolder = 'Tabs'
-        files = util.listfile(tabFolder)
+        files = util.listFile(tabFolder)
         
         for filename in files:
             name = util.dir2module(filename)

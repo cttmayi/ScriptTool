@@ -67,7 +67,7 @@ class util():
 	
 	
 	@staticmethod
-	def listfile(dirname, IsFullName = True, isRecursion = False):
+	def listFile(dirname, IsFullName = True, isRecursion = False):
 		files = []
 		try:
 			ls=os.listdir(dirname)
@@ -90,7 +90,7 @@ class util():
 		return files
 	
 	@staticmethod
-	def listdir(dirname, full = False):
+	def listDir(dirname, full = False):
 		dirs = []
 		try:
 			ls=os.listdir(dirname)

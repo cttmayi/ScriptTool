@@ -15,7 +15,7 @@ class menuFrame(menu):
         if (self.uedit != None):
             self.createSubMenu('uedit', self.uedit, self.onCfgUedit)        
         
-        self.tools = util.listdir('Tool', False)
+        self.tools = util.listDir('Tool', False)
         if (self.tools != None):
             self.createSubMenu('tool', self.tools, self.onCfgTool)
     
