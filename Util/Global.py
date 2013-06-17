@@ -19,6 +19,10 @@ class globals():
         
         self.cfgData = ins
         
+        #version
+        self.version = 'v1.01'
+        
+        
         # ui
         self.uiWidgetWidth = 5
         self.uiWidgetHeight = 3
