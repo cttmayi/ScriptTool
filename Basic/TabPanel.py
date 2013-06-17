@@ -29,7 +29,8 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         self.onCreate()
         self.isCreated = True
         self.Bind(wx.EVT_CONTEXT_MENU, self.__onRClickAction)
-        self.SetVirtualSize((self.maxWidth, self.maxHeight))
+        #self.SetVirtualSize((self.maxWidth, self.maxHeight))
+        self.SetVirtualSize((self.maxWidth, 0))
         self.SetScrollRate(20, 20)        
 
     def __onRClickAction(self, event):
