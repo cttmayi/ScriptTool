@@ -52,8 +52,8 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         if (self.frame.tabFrames.has_key(name)):
             tid = self.frame.tabFrames[name][0]
             ins = self.frame.tabFrames[name][1]
-            ins.onOpenTab(data)
             self.frame.notebook.SetSelection(tid)
+            ins.onOpenTab(data)
             return True
         return False
     

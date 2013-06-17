@@ -32,4 +32,5 @@ class tabFrame(tabPanel):
             print 'pass'
             
     def onOpenTab(self, data):
+        self.frame.doFileDialog()
         self.frame.printL(data)
