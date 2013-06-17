@@ -20,7 +20,7 @@ class globals():
         self.cfgData = ins
         
         #version
-        self.version = 'v1.01'
+        self.version = 'v1.02'
         
         
         # ui
