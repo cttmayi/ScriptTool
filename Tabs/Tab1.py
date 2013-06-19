@@ -172,7 +172,7 @@ class tabFrame(tabPanel):
         self.tree.setItemAttr(t, 'expand')
         
     def onTreeRightClick(self):
-        self.popupA.show()
+        self.popupA.show([0])
         pass
     
     def onPass(self, event):

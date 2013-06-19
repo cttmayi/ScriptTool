@@ -7,13 +7,16 @@ class popup(wx.Menu):
         wx.Menu.__init__(self)
         self.panel = panel
         self.action = {}
+        self.items = []
         
     def addItem(self, name, action, pid = 0):
         tid = wx.NewId()
         self.action[tid] = action
+        self.items.append(tid)
         self.pid = pid
         self.Bind(wx.EVT_MENU, self.__onAction, id=tid)
         item = wx.MenuItem(self, tid, name)
+
         self.AppendItem(item)
         return tid
     
@@ -33,9 +36,16 @@ class popup(wx.Menu):
 #        self.AppendItem(item)
 #        return tid
         
-    def show(self):
-        self.panel.frame.sendMessage(self.__onShow, None)
+    def show(self, disableItems = None):
+        self.panel.frame.sendMessage(self.__onShow, disableItems)
         #self.panel.PopupMenu(self)
         
-    def __onShow(self, data):
+    def __onShow(self, disableItems):
+        if disableItems != None:
+            for iid in disableItems:
+                self.Enable(self.items[iid], 0)
         self.panel.PopupMenu(self)
+        if disableItems != None:
+            for iid in disableItems:
+                self.Enable(self.items[iid], 1)        
+        
