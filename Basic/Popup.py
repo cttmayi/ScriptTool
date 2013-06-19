@@ -3,17 +3,19 @@ import wx
 class popup(wx.Menu):
     panel = None
     
-    def __init__(self, panel):
+    def __init__(self, panel, arg = None):
         wx.Menu.__init__(self)
         self.panel = panel
         self.action = {}
+        self.subArg = {}
         self.items = []
+        self.arg = arg
         
-    def addItem(self, name, action, pid = 0):
+    def addItem(self, name, action, subArg = None):
         tid = wx.NewId()
         self.action[tid] = action
         self.items.append(tid)
-        self.pid = pid
+        self.subArg[tid] = subArg
         self.Bind(wx.EVT_MENU, self.__onAction, id=tid)
         item = wx.MenuItem(self, tid, name)
 
@@ -22,10 +24,15 @@ class popup(wx.Menu):
     
     def __onAction(self, event):
         tid = event.GetId()
-        if self.action[tid].func_code.co_argcount == 1:
-            self.action[tid]()
+        if self.action[tid].func_code.co_argcount == 3:
+            self.action[tid](self.arg, self.subArg[tid])
+        elif self.action[tid].func_code.co_argcount == 2:
+            if self.arg != None:
+                self.action[tid](self.arg)
+            else:
+                self.action[tid](self.subArg[tid])
         else:
-            self.action[tid](self.pid)
+            self.action[tid]()
         event.Skip()
         pass
     

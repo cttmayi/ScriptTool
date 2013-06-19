@@ -84,9 +84,9 @@ class tabFrame(tabPanel):
         self.bmp.setBitmap('d:\\1.jpg')
         self.bmp.setLeftClickAction(self.onBitmapCbk)
         
-        self.popupA = self.createPopupMenu()
+        self.popupA = self.createPopupMenu('P')
         self.popupA.addItem("A", self.onPopupA_A)
-        self.popupA.addItem("B", self.onPopupA_B)
+        self.popupA.addItem("B", self.onPopupA_B, 'B')
         
         self.tree.setRClickPopup(self.popupA, 'expand')
         
@@ -298,8 +298,9 @@ class tabFrame(tabPanel):
         self.tree.setItemText(item, 'A')
         print 'A'
         
-    def onPopupA_B(self):
-        print 'B'    
+    def onPopupA_B(self, a, b):
+        print 'onPopupA_B'
+        print a, b
     
         
     def OnRClickB(self, event):

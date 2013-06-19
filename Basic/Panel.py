@@ -309,8 +309,8 @@ class panel():
         wdt = dialog(self.panel, title, w)
         return wdt
     
-    def createPopupMenu(self):
-        popupMenu = popup(self.panel)
+    def createPopupMenu(self, arg = None):
+        popupMenu = popup(self.panel, arg)
         return popupMenu
     
 #    def setRClickAction(self, action):
