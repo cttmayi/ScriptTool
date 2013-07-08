@@ -280,9 +280,9 @@ class tabFrame(tabPanel):
                 ]
         
         path = self.frame.doFileDialog('C:\\', '*.trace')
-        
-        v = traceView(path)
-        v.showView(filters)        
+        if path != None:
+            v = traceView(path)
+            v.showView(filters)        
 
     def onClickDialog(self):
         dlg = self.createDialog('Title', 20)
