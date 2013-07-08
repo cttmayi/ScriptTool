@@ -6,6 +6,8 @@ from Util.Excel import excel
 
 from Util.Misc import misc
 
+from Function.TraceView import traceView
+
 class tabFrame(tabPanel):
     tree = None
 
@@ -32,6 +34,8 @@ class tabFrame(tabPanel):
         self.createButton('goto tab2',8, -1, 15, self.onGotoTab2)
         self.createButton('util',8, -1, 15, self.onUtil)
         self.btnSet = self.createButton('Button.reset', 8, -1, 15, self.btnReset)
+        self.createButton('trace',8, -1, 15, self.onTraceView)
+        
         
         self.tree = self.createTree(-1 , 2, 30, 10)
         root = self.tree.addItem(None, 'dataA', 'AB', 'C')
@@ -265,7 +269,21 @@ class tabFrame(tabPanel):
         print util.split('ABCDEF', ['A', 'F'])
         print util.split('ABCDEF', ['CD', 'F'])
         print util.split('ABCDEFGHIJKL', ['A','CD', 'F', 'IJK'])
-    
+
+    def onTraceView(self):
+        filters = [
+                ['android.view.InputEventConsistencyVerifier.onTouchEvent', 'onTouchEvent', 'r'],
+                ['android.os.MessageQueue.nativePollOnce', 'AP', 'r'],
+                ['android.os.Handler.dispatchMessage', 'AP', 'y'],
+                ['android.view.ViewRootImpl.finishInputEvent', 'AP2', 'y'],
+                ['android.view.MotionEvent.recycle', 'AP2', 'r'],
+                ]
+        
+        path = self.frame.doFileDialog('C:\\', '*.trace')
+        
+        v = traceView(path)
+        v.showView(filters)        
+
     def onClickDialog(self):
         dlg = self.createDialog('Title', 20)
         edit = dlg.createEdit('Name:')
