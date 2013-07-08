@@ -271,9 +271,18 @@ class mainFrame(wx.Frame):
         sel = self.tabFrames[name]
         self.notebook.SetSelection(sel)
 
-    def doFileDialog(self, defaultPath = None, filefilter = '*.*'):
+    def doFileDialog(self, defaultPath = None, fileFilters = '*.*'):
         #wildcard = "All files (*.*)|*.*"
-        wildcard = "files (" + filefilter + ")|" + filefilter
+        
+        fileFilters = fileFilters.split('|')
+        
+        wildcard = ''
+        for fileFilter in fileFilters:
+            wildcard = wildcard + "files (" + fileFilter + ")|" + fileFilter + '|'
+            
+        wildcard = wildcard[0:-1]
+        print wildcard
+        
         path = None
         
         dialog = wx.FileDialog(None, "Choose a file", os.getcwd(), "", wildcard, wx.OPEN)
