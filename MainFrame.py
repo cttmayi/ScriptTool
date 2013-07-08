@@ -14,6 +14,10 @@ from Util.Global import globals
 from Basic.TabPanel import tabPanel
 from Basic.Menu import menu
 
+import matplotlib
+import pylab
+import numpy
+
 from Basic.Dialog import dialog
 
 class customerEvent(wx.PyCommandEvent):
