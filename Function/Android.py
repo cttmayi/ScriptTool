@@ -51,14 +51,18 @@ class android():
             self.logcatFile.write('>>> >>>\n')
         pass
         
-    def filterLogcat(self, ifile, ofile, tags, pids = None):
+    def filterLogcat(self, ifile, ofile, ftags, pids = None):
         rfile = open(ifile, 'r')
         lines = rfile.readlines()
         rfile.close()
         
-        for i in range(len(tags)):
-            if len(tags[i]) > 7:
-                tags[i] = tags[i] + ':'
+        
+        tags = []
+        for i in range(len(ftags)):
+            if len(ftags[i]) > 7:
+                tags.append(ftags[i] + ':')
+            else:
+                tags.append(ftags[i])
         
         
         wfile = open(ofile, 'w')
