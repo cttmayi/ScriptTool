@@ -185,7 +185,10 @@ class methodTrace():
             fp.close()
 
     def getMethodTime(self, methodName):
-        return self.infoMethodCall[methodName]
+        try:
+            return self.infoMethodCall[methodName]
+        except:
+            return None
     
     def getTimeline(self):
         return self.timeline
