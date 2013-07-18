@@ -8,6 +8,7 @@ class button(wx.Button):
             self.Bind(wx.EVT_BUTTON, self.__onClick, self)
         self.click_cbk = cbk
         self.arg = arg
+        self.panel = panel
         
         
     def __onClick(self, event):
@@ -15,6 +16,7 @@ class button(wx.Button):
             self.click_cbk()
         else:
             self.click_cbk(self.arg)
+        self.panel.updateUI()
         event.Skip()
     
     def reset(self, name, cbk = None):

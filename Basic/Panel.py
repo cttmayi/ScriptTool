@@ -62,6 +62,8 @@ class panel():
         #self.Bind(wx.EVT_LEFT_DOWN, self.__onMouseLeftDown)
         self.__leftClickZone = []
 
+        self.enableWidgetCbk = {}
+
 
     def __GET_POS(self, x, w):
         if (x < 0):
@@ -141,6 +143,13 @@ class panel():
 #    def setOutputColor(self, color):
 #        self.frame.setOutputColor(color) 
 
+    def updateUI(self):
+        for wgt in self.enableWidgetCbk.keys():
+            cbk = self.enableWidgetCbk[wgt]
+            wgt.setEnable(cbk())
+                
+
+
     def createStaticBox(self, text, x, y, w, h):
         x = self.__GET_POS(x, w)
         y = self.__GET_POS_Y(y, h)
@@ -188,7 +197,7 @@ class panel():
         
         return wdt
 
-    def createButton(self, text, x, y, w, cbk, arg = None):
+    def createButton(self, text, x, y, w, cbk, arg = None, eCbk = None):
         """´´½¨°´Å¥(Button)
         """
         h = 1
@@ -198,6 +207,9 @@ class panel():
         self.__GET_MAX(x, y, w, h)
         
         wdt = button(self.panel, text, (x, y), (w, h), cbk, arg)
+        
+        if eCbk != None:
+            self.enableWidgetCbk[wdt] = eCbk
         return wdt
         
     def createCombo(self, x, y, cblist):

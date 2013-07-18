@@ -19,22 +19,23 @@ class tabFrame(tabPanel):
         self.createStatic("Name:", 1, 1)
         self.createStatic("Name:", 2, 2)
         
-        self.createButton("RunCmdCbk", 8, 2, 15, self.OnClickRunCmdCbk)
-        self.createButton("InputWait", 8, -1, 15, self.OnClickInputWait)
-        self.createButton("SendMessage", 8, -1, 15, self.onClickSendMessage)
-        self.createButton("Dialog", 8, -1, 15, self.onClickDialog)
-        self.createButton('OpenFile', 8, -1, 15, self.onOpenFile)
-        self.createButton("Log", 8, -1, 15, self.onClickLog)
-        self.createButton('Tree',8, -1, 15, self.onClickTree)
-        self.createButton('DirDialog',8, -1, 15, self.onFileDialog)
-        self.createButton('WriteExcel',8, -1, 15, self.onWriteExcel)
-        self.createButton('util.split',8, -1, 15, self.onUtilSplit)
-        self.createButton('timer start',8, -1, 15, self.onTimerStart)
-        self.createButton('timer stop',8, -1, 15, self.onTimerStop)
-        self.createButton('goto tab2',8, -1, 15, self.onGotoTab2)
-        self.createButton('util',8, -1, 15, self.onUtil)
-        self.btnSet = self.createButton('Button.reset', 8, -1, 15, self.btnReset)
-        self.createButton('trace',8, -1, 15, self.onTraceView)
+        self.createButton("RunCmdCbk", 8, 2, 15, self.OnClickRunCmdCbk, eCbk = self.onShow)
+        self.createButton("InputWait", 8, -1, 15, self.OnClickInputWait, eCbk = self.onShow)
+        self.createButton("SendMessage", 8, -1, 15, self.onClickSendMessage, eCbk = self.onShow)
+        self.createButton("Dialog", 8, -1, 15, self.onClickDialog, eCbk = self.onShow)
+        self.createButton('OpenFile', 8, -1, 15, self.onOpenFile, eCbk = self.onShow)
+        self.createButton("Log", 8, -1, 15, self.onClickLog, eCbk = self.onShow)
+        self.createButton('Tree',8, -1, 15, self.onClickTree, eCbk = self.onShow)
+        self.createButton('DirDialog',8, -1, 15, self.onFileDialog, eCbk = self.onShow)
+        self.createButton('WriteExcel',8, -1, 15, self.onWriteExcel, eCbk = self.onShow)
+        self.createButton('util.split',8, -1, 15, self.onUtilSplit, eCbk = self.onShow)
+        self.createButton('timer start',8, -1, 15, self.onTimerStart, eCbk = self.onShow)
+        self.createButton('timer stop',8, -1, 15, self.onTimerStop, eCbk = self.onShow)
+        self.createButton('goto tab2',8, -1, 15, self.onGotoTab2, eCbk = self.onShow)
+        self.createButton('util',8, -1, 15, self.onUtil, eCbk = self.onShow)
+        self.btnSet = self.createButton('Button.reset', 8, -1, 15, self.btnReset, eCbk = self.onShow)
+        self.createButton('trace',8, -1, 15, self.onTraceView, eCbk = self.onShow)
+        self.createButton('enableButton',8, -1, 15, self.onEnableButton)
         
         
         self.tree = self.createTree(-1 , 2, 30, 10)
@@ -84,7 +85,7 @@ class tabFrame(tabPanel):
         self.sel = self.createCombo(-1, 2, ["COM1","COM2"])
         self.sel.setSel(1)
         
-        self.bmp = self.createBitmap(5,18,20,10)
+        self.bmp = self.createBitmap(5,20,20,10)
         self.bmp.setBitmap('d:\\1.jpg')
         self.bmp.setLeftClickAction(self.onBitmapCbk)
         
@@ -140,6 +141,8 @@ class tabFrame(tabPanel):
         
         #self.setFramePosition(400)
         
+        self.enableShow = False
+        
         
         minst = misc.getInstance()
         if minst.makeInstallTool('Make'):
@@ -152,6 +155,16 @@ class tabFrame(tabPanel):
         
     def onPause(self):
         print 'TAB1 kill Focus'
+
+
+    def onEnableButton(self):
+        if self.enableShow == True:
+            self.enableShow = False
+        else:
+            self.enableShow = True        
+
+    def onShow(self):
+        return self.enableShow
 
     def onRadio(self):
         print 'Radio'

@@ -72,6 +72,7 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         self.frame.setFramePosition(self.frameHeight)
         
         self.onResume()
+        self.updateUI()
     
     def performPause(self, event):
         self.frameHeight = self.frame.getFramePosition()
