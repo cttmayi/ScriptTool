@@ -255,6 +255,19 @@ class util():
 		[f, e] = os.path.splitext(p)
 		filePath = os.path.join(Filedir, f  + '_' + subName + e)
 		return filePath
+
+	@staticmethod
+	def joinFileExt(fileName, ext):
+		'''
+		input: Temp\Log.log ams
+		output: Temp\Log_ams.log
+		'''
+		
+		Filedir = os.path.dirname(fileName)
+		p = os.path.basename(fileName)
+		f = os.path.splitext(p)[0]
+		filePath = os.path.join(Filedir, f  + '.' + ext)
+		return filePath	
 	
 	@staticmethod
 	def grep(inFile, names):
