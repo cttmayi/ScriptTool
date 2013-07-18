@@ -3,6 +3,7 @@ import wx
 from Basic.Edit import edit
 from Basic.Table import table
 from Basic.Tree import tree
+from Basic.Bitmap import bitmap
 
 class tab(wx.Notebook):
     def __init__(self, parent, pos, size):
@@ -28,7 +29,6 @@ class tab(wx.Notebook):
         for i in range(len(columns)):
             wgt.InsertColumn(i, columns[i])
         
-        
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(wgt, 1, wx.ALL|wx.EXPAND, 5)
         pt.SetSizer(sizer)
@@ -43,6 +43,17 @@ class tab(wx.Notebook):
         pt.SetSizer(sizer)
         self.AddPage(pt, title)
         return wgt
+    
+    def addBitmap(self, title):
+        pt = wx.Panel(self)
+        [w, h] = self.GetSize()
+        wgt = bitmap(pt,(0,0), (w-18, h-18))
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(wgt, 1, wx.ALL|wx.EXPAND, 5)
+        pt.SetSizer(sizer)
+        self.AddPage(pt, title)
+        return wgt
+        pass
     
     
     

@@ -124,7 +124,12 @@ class tabFrame(tabPanel):
         m.setColWidth(1, 20)
         m.insertItem(0, ['1','1'])
         m = t.addTable('Table', ['A','B'])
+        
+        m = t.addBitmap('bitmap')
+        m.setBitmap('d:\\1.jpg')
         t.setSel(1)
+        
+        
         
         
         print self.getCfg('A')
