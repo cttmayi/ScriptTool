@@ -270,7 +270,8 @@ class tabFrame(tabPanel):
         self.tree.setTree(self.tree.root, a, True)
     
     def onFileDialog(self):
-        print self.frame.doFileDialog('C:\\', '*.jpg|*.mp3')
+        print self.frame.doFileDialog('C:\\', '*.jpg|*.mp3', 'FILEKEY')
+        print self.frame.doDirDialog('C:\\', 'DIRKEY')
     
     def onWriteExcel(self):
         efile = excel.open('file.xls')

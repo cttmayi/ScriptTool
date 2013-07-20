@@ -66,6 +66,13 @@ class mainFrame(wx.Frame):
         self.config = ConfigParser.ConfigParser()
         self.config.readfp(open(self.cfg_name, 'r'))
 
+        if not self.config.has_section('fileDialog'):
+            self.config.add_section('fileDialog')
+            self.config.write(open(self.cfg_name, "w"))
+        if not self.config.has_section('dirDialog'):
+            self.config.add_section('dirDialog')
+            self.config.write(open(self.cfg_name, "w"))
+
         self.misc = misc.getInstance()
         self.misc.setFrame(self)
 
@@ -271,8 +278,16 @@ class mainFrame(wx.Frame):
         sel = self.tabFrames[name]
         self.notebook.SetSelection(sel)
 
-    def doFileDialog(self, defaultPath = None, fileFilters = '*.*'):
+    def doFileDialog(self, defaultPath = None, fileFilters = '*.*', saveKey = None):
         #wildcard = "All files (*.*)|*.*"
+        
+        try:
+            if saveKey != None:
+                path = self.config.get('fileDialog', saveKey)
+            else:
+                path = defaultPath
+        except:
+            path = defaultPath
         
         fileFilters = fileFilters.split('|')
         
@@ -281,31 +296,44 @@ class mainFrame(wx.Frame):
             wildcard = wildcard + "files (" + fileFilter + ")|" + fileFilter + '|'
             
         wildcard = wildcard[0:-1]
-        print wildcard
         
-        path = None
+        ret = None
         
         dialog = wx.FileDialog(None, "Choose a file", os.getcwd(), "", wildcard, wx.OPEN)
-        if defaultPath != None :
-            dialog.SetPath(defaultPath)
+        if path != None :
+            dialog.SetPath(path)
         
         if dialog.ShowModal() == wx.ID_OK:
-            path = dialog.GetPath()
+            ret = dialog.GetPath()
+            if saveKey != None:
+                self.config.set('fileDialog', saveKey, ret)
+                self.config.write(open(self.cfg_name, "w"))            
         dialog.Destroy()
-        return path
+        return ret
     
-    def doDirDialog(self, defaultPath = None):
-        path = None
+    def doDirDialog(self, defaultPath = None, saveKey = None):
+        try:
+            if saveKey != None:
+                path = self.config.get('dirDialog', saveKey)
+            else:
+                path = defaultPath
+        except:
+            path = defaultPath        
+        
+        ret = None
         dialog = wx.DirDialog(None, "Choose a directory:",
                               style = wx.DD_DEFAULT_STYLE | wx.DD_NEW_DIR_BUTTON)
         
-        if defaultPath != None :
-            dialog.SetPath(defaultPath)
+        if path != None :
+            dialog.SetPath(path)
         
         if dialog.ShowModal() == wx.ID_OK:
-            path = dialog.GetPath()
+            ret = dialog.GetPath()
+            if saveKey != None:
+                self.config.set('dirDialog', saveKey, ret)
+                self.config.write(open(self.cfg_name, "w"))     
         dialog.Destroy()
-        return path
+        return ret
 
     def createDialog(self, title, w):
         w = self.TEXT_W * w
