@@ -209,7 +209,7 @@ class panel():
         wdt = button(self.panel, text, (x, y), (w, h), cbk, arg)
         
         if eCbk != None:
-            self.enableWidgetCbk[wdt] = eCbk
+            self.panel.enableWidgetCbk[wdt] = eCbk
         return wdt
         
     def createCombo(self, x, y, cblist):
