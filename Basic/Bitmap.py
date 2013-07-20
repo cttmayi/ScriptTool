@@ -72,7 +72,10 @@ class bitmap(wx.StaticBitmap):
         
         x = x * self.bmpW / self.realW
         y = y * self.bmpH / self.realH
-        self.__leftClickCbk(x, y)
+        if self.__leftClickCbk.func_code.co_argcount == 1:
+            self.__leftClickCbk()
+        else:
+            self.__leftClickCbk(x, y)
         
     def getBitmapSize(self):
         return [self.bmpW, self.bmpH]
