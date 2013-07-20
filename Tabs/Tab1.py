@@ -36,6 +36,7 @@ class tabFrame(tabPanel):
         self.btnSet = self.createButton('Button.reset', 8, -1, 15, self.btnReset, eCbk = self.onShow)
         self.createButton('trace',8, -1, 15, self.onTraceView, eCbk = self.onShow)
         self.createButton('enableButton',8, -1, 15, self.onEnableButton)
+        self.createButton('setBitmap',8, -1, 15, self.onSetBitmap)
         
         
         self.tree = self.createTree(-1 , 2, 30, 10)
@@ -126,8 +127,8 @@ class tabFrame(tabPanel):
         m.insertItem(0, ['1','1'])
         m = t.addTable('Table', ['A','B'])
         
-        m = t.addBitmap('bitmap')
-        m.setBitmap('d:\\1.jpg')
+        self.bmp2 = t.addBitmap('bitmap')
+        self.bmp2.setBitmap('d:\\1.jpg')
         t.setSel(1)
         
         
@@ -162,6 +163,10 @@ class tabFrame(tabPanel):
             self.enableShow = False
         else:
             self.enableShow = True        
+
+    def onSetBitmap(self):
+        self.bmp.setBitmap(None)
+        self.bmp2.setBitmap(None)
 
     def onShow(self):
         return self.enableShow

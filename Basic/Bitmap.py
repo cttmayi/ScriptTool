@@ -18,6 +18,7 @@ class bitmap(wx.StaticBitmap):
     def setBitmap(self, path, w = 0, h = 0):
         if self.widget != None:
             self.widget.Destroy()
+            self.widget = None
             
         if path == None:
             return True
