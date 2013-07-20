@@ -180,5 +180,6 @@ class tree(wx.TreeCtrl):
     def getTree(self, root):
         pass
         
-    
+    def destrop(self):
+        self.Destroy()
         

@@ -76,6 +76,9 @@ class bitmap(wx.StaticBitmap):
         
     def getBitmapSize(self):
         return [self.bmpW, self.bmpH]
+    
+    def destrop(self):
+        self.Destroy()
         
         
 

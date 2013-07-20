@@ -67,5 +67,8 @@ class table(wx.ListCtrl):
     def __onRClickAction(self, event):
         if self.rclick_cbk != None:
             self.rclick_cbk()
-        event.Skip()            
+        event.Skip()
+    
+    def destrop(self):
+        self.Destroy()    
     
