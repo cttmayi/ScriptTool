@@ -4,7 +4,7 @@ import wx
 
 class bitmap(wx.StaticBitmap):
     def __init__(self, parent, pos, size):
-        self.widget = None #wx.StaticBitmap(parent, -1, pos = pos)
+        self.widget = None
         self.width = size[0]
         self.height = size[1]
         
@@ -18,6 +18,10 @@ class bitmap(wx.StaticBitmap):
     def setBitmap(self, path, w = 0, h = 0):
         if self.widget != None:
             self.widget.Destroy()
+            
+        if path == None:
+            return True
+        
         self.widget = wx.StaticBitmap(self.parent, -1, pos = (self.realX, self.realY))
         
         
