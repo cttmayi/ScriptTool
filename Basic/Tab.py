@@ -49,7 +49,7 @@ class tab(wx.Notebook):
         [w, h] = self.GetSize()
         wgt = bitmap(pt,(0,0), (w-18, h-18))
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(wgt, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(wgt.widget, 1, wx.ALL|wx.EXPAND, 5)
         pt.SetSizer(sizer)
         self.AddPage(pt, title)
         return wgt

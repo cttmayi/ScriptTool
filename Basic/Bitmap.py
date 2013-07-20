@@ -4,18 +4,23 @@ import wx
 
 class bitmap(wx.StaticBitmap):
     def __init__(self, parent, pos, size):
-        wx.StaticBitmap.__init__(self, parent, -1, pos = pos)
+        self.widget = None #wx.StaticBitmap(parent, -1, pos = pos)
         self.width = size[0]
         self.height = size[1]
         
-        #self.realX = pos[0]
-        #self.realY = pos[1]
-        #self.parent = parent
+        self.realX = pos[0]
+        self.realY = pos[1]
+        self.parent = parent
         
         self.bmpH = 0
         self.bmpW = 0
     
     def setBitmap(self, path, w = 0, h = 0):
+        if self.widget != None:
+            self.widget.Destroy()
+        self.widget = None #wx.StaticBitmap(parent, -1, pos = pos)
+        
+        
         ext = path.split('.')[-1]
         img = None
         
@@ -28,8 +33,10 @@ class bitmap(wx.StaticBitmap):
             img = wx.Image(path, wx.BITMAP_TYPE_JPEG)
         if (ext == 'png'):
             img = wx.Image(path, wx.BITMAP_TYPE_PNG)
+            
         
-        if (img.IsOk() == False):
+        
+        if (img == None or img.IsOk() == False):
             return
 
         hh = img.GetHeight()
@@ -58,11 +65,11 @@ class bitmap(wx.StaticBitmap):
             img = img.Scale(w, h, 0.95)
 
         bmp = img.ConvertToBitmap()
-        self.SetBitmap(bmp)
-        self.Refresh()
+        self.widget.SetBitmap(bmp)
+        self.widget.Refresh()
         
     def setLeftClickAction(self, cbk):
-        self.Bind(wx.EVT_LEFT_DOWN, self.__onLeftClickAction)
+        self.widget.Bind(wx.EVT_LEFT_DOWN, self.__onLeftClickAction)
         self.__leftClickCbk = cbk
         #self.parent.setLeftClickAction(self.realX, self.realY, self.realW, self.realH, cbk)
         
@@ -81,7 +88,7 @@ class bitmap(wx.StaticBitmap):
         return [self.bmpW, self.bmpH]
     
     def destrop(self):
-        self.Destroy()
+        self.widget.Destroy()
         
         
 
