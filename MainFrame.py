@@ -122,7 +122,7 @@ class mainFrame(wx.Frame):
         pt = wx.Panel(notebookLog)
         #ot = wx.TextCtrl(self.outPanel, -1, "Welcome!\n", style=wx.TE_MULTILINE|wx.TE_RICH2)
         ot = wx.TextCtrl(pt, -1, "Welcome!\n", style = wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
-        wx.Log.SetActiveTarget(wx.LogTextCtrl(ot))
+        #wx.Log.SetActiveTarget(wx.LogTextCtrl(ot))
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(ot, 1, wx.ALL|wx.EXPAND, 5)
         pt.SetSizer(sizer)
@@ -158,7 +158,7 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
- #               try:
+#                try:
                     dyn = dynLoad(menuFolder + '.' + name, ['*'])
                     ins = dyn.getClassInstance('menuFrame', self)
                     if ins.menuName == None:
@@ -182,7 +182,7 @@ class mainFrame(wx.Frame):
         for filename in files:
             name = util.dir2module(filename)
             if (name != None):
- #               try:
+#                try:
                 dyn = dynLoad(tabFolder+'.'+name,['*'])
                 ins = dyn.getClassInstance('tabFrame', notebook, self)
                 ins.performCreate()
@@ -191,10 +191,10 @@ class mainFrame(wx.Frame):
                 notebook.AddPage(ins, ins.tabName)
                 self.tabFrames[ins.tabName] = [ tabId, ins ]
                 tabId = tabId + 1
-  #              except Exception as e:
-  #                  ins.Destroy()
-  #                  print 'Tab(' + name + ') error.'
-  #                  print e
+#               except Exception as e:
+#                   ins.Destroy()
+#                   print 'Tab(' + name + ') error.'
+#                   print e
         
         notebook.GetPage(0).performResume(None)
         notebook.SetSelection(0)
