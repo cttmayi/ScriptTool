@@ -18,7 +18,7 @@ class bitmap(wx.StaticBitmap):
     def setBitmap(self, path, w = 0, h = 0):
         if self.widget != None:
             self.widget.Destroy()
-        self.widget = None #wx.StaticBitmap(parent, -1, pos = pos)
+        self.widget = wx.StaticBitmap(self.parent, -1, pos = (self.realX, self.realY))
         
         
         ext = path.split('.')[-1]

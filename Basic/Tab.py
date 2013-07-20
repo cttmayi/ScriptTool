@@ -47,10 +47,10 @@ class tab(wx.Notebook):
     def addBitmap(self, title):
         pt = wx.Panel(self)
         [w, h] = self.GetSize()
-        wgt = bitmap(pt,(0,0), (w-18, h-18))
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(wgt.widget, 1, wx.ALL|wx.EXPAND, 5)
-        pt.SetSizer(sizer)
+        wgt = bitmap(pt,(0,0), (w-10, h-10))
+        #sizer = wx.BoxSizer(wx.VERTICAL)
+        #sizer.Add(wgt.widget, 1, wx.ALL|wx.EXPAND, 5)
+        #pt.SetSizer(sizer)
         self.AddPage(pt, title)
         return wgt
         pass
