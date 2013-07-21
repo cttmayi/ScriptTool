@@ -262,9 +262,10 @@ class mainFrame(wx.Frame):
 
     def onCustomerEvent(self, event):
         #print 'onCustomerEvent'
-        function = event.data[0]
-        data = event.data[1]
-        function(data)
+        data = event.data
+        function = data[0]
+        del data[0]        
+        function(*data)
         pass
 
     def setFramePosition(self, height):

@@ -228,10 +228,10 @@ class tabFrame(tabPanel):
 
 
     def OnClickRunCmd(self, bid):
-        #self.thread = self.frame.runCmdCbk("cmd", None, self.OnCmdCbk)
+        self.thread = self.frame.runCmdCbk("ping 127.0.0.1 -n 10", None, self.OnCmdCbk)
         #print util.runWait('ping 127.0.0.1 -n 10', 0)
         
-        util.runWaitEx('ping 127.0.0.1 -n 10', 0, self.frame.printL)
+        util.runWaitEx('ping 127.0.0.1 -n 1', 0, self.frame.printW)
         #a = util.dir2tree('D:\\bak')
         #a.show()
         #self.tree.setTree(self.tree.root, a)
@@ -329,6 +329,7 @@ class tabFrame(tabPanel):
     def OnCmdCbk(self, string):
         #self.panel.SetTitle("Click Count: %s" % event.GetClickCount())
         print string,
+        self.frame.printW(string)
         #thread = event.getThread()
         #thread.stop()
         pass
