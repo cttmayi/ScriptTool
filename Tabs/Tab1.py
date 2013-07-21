@@ -19,7 +19,7 @@ class tabFrame(tabPanel):
         self.createStatic("Name:", 1, 1)
         self.createStatic("Name:", 2, 2)
         
-        self.createButton("RunCmdCbk", 8, 2, 15, self.OnClickRunCmdCbk, eCbk = self.onShow)
+        self.createButton("RunCmd", 8, 2, 15, self.OnClickRunCmd, eCbk = self.onShow)
         self.createButton("InputWait", 8, -1, 15, self.OnClickInputWait, eCbk = self.onShow)
         self.createButton("SendMessage", 8, -1, 15, self.onClickSendMessage, eCbk = self.onShow)
         self.createButton("Dialog", 8, -1, 15, self.onClickDialog, eCbk = self.onShow)
@@ -227,9 +227,11 @@ class tabFrame(tabPanel):
         self.frame.setFramePosition(100)
 
 
-    def OnClickRunCmdCbk(self, bid):
-        self.thread = self.frame.runCmdCbk("cmd", None, self.OnCmdCbk)
+    def OnClickRunCmd(self, bid):
+        #self.thread = self.frame.runCmdCbk("cmd", None, self.OnCmdCbk)
         #print util.runWait('ping 127.0.0.1 -n 10', 0)
+        
+        util.runWaitEx('ping 127.0.0.1 -n 10', 0, self.frame.printL)
         #a = util.dir2tree('D:\\bak')
         #a.show()
         #self.tree.setTree(self.tree.root, a)

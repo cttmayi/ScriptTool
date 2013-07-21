@@ -43,6 +43,31 @@ class util():
 		return out
 
 	@staticmethod
+	def runWaitEx(cmd, timeout = 0, cbk = None):
+		out = ''
+		thread = runWaitThread(cmd)
+		thread.start()
+		wait_remaining_sec = timeout
+		proc = thread.getPopen()
+		while proc.poll() is None and (timeout == 0 or wait_remaining_sec > 0):
+			time.sleep(0.5)
+			wait_remaining_sec -= 500
+			print wait_remaining_sec
+			data = thread.readLine()
+			while(data != None):
+				print 'cbk'
+				out = out + data
+				if cbk != None:
+					cbk(data)
+					print data
+				data = thread.readLine()
+			#print wait_remaining_sec
+		if wait_remaining_sec <= 0 and timeout != 0:
+			util.stopCmdbyID(proc.pid)		
+
+		return out
+
+	@staticmethod
 	def runWaitOutputString(cmd, timeout = 0):
 		#return subprocess.check_output(cmd.split(' '), shell=True)
 		return util.runWait(cmd, timeout)
@@ -411,7 +436,47 @@ class cmdThread(threading.Thread):
 				evt.setData([self.fun_finish, string])
 				#evt.setThread(self)
 				self.panel.GetEventHandler().AddPendingEvent(evt)
-				
+
+class runWaitThread(threading.Thread):
+	def __init__(self, cmd):
+		threading.Thread.__init__(self)
+		self.data = []
+		self.cmd = cmd
+		self.popen = util.runPipe(cmd)
+		self.output_pipe =  self.popen.stdout
+		#self.input_pipe = self.popen.stdin
+		self.mutex = threading.Lock()
+
+	def getPopen(self):
+		return self.popen
+	
+	
+
+	def readLine(self):
+		self.mutex.acquire()
+		if len(self.data) > 0:
+			ret = self.data[0]
+			del self.data[0]
+		else:
+			ret = None
+		self.mutex.release()
+		return ret
+
+	def run(self):
+		while (True):
+			print 'r'
+			string =  self.output_pipe.readline()
+			print 're'
+			if (string):
+				print 'in'
+				self.mutex.acquire()
+				self.data.append(string)
+				self.mutex.release()
+				print 'out'
+			else:
+				break		
+		pass
+		
 
 class tree:
 	
