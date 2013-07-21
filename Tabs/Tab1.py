@@ -37,6 +37,7 @@ class tabFrame(tabPanel):
         self.createButton('trace',8, -1, 15, self.onTraceView, eCbk = self.onShow)
         self.createButton('enableButton',8, -1, 15, self.onEnableButton)
         self.createButton('setBitmap',8, -1, 15, self.onSetBitmap)
+        self.createButton('startTask',8, -1, 15, self.onStartTask)
         
         
         self.tree = self.createTree(-1 , 2, 30, 10)
@@ -376,6 +377,17 @@ class tabFrame(tabPanel):
     
     def onTimer(self, e):
         self.frame.printL('onTimer')
+        
+    def onStartTask(self):
+        self.frame.startTask(self.onTask, 'task')
+        
+    def onTask(self, data):
+        print data
+        self.frame.sendMessage(self.onTaskDoing, data, 0)
+        
+    def onTaskDoing(self, dataA, dataB):
+        print dataA, dataB
+        
         
         
         

@@ -476,7 +476,18 @@ class runWaitThread(threading.Thread):
 			else:
 				break		
 		pass
+
+class taskThread(threading.Thread):
+	def __init__(self, function, data):
+		threading.Thread.__init__(self)
+		self.function = function
+		self.data = data
 		
+	def run(self):
+		if self.function.func_code.co_argcount == 1:
+			self.function()
+		else:
+			self.function(self.data)
 
 class tree:
 	

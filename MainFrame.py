@@ -5,6 +5,7 @@ import os
 from Util.Util import util
 from Util.Util import dynLoad
 from Util.Util import cmdThread
+from Util.Util import taskThread
 import ConfigParser
 
 from Util.Misc import misc
@@ -256,16 +257,21 @@ class mainFrame(wx.Frame):
         
         event.Skip()
 
-    def sendMessage(self, function, data):
+    def sendMessage(self, function, *data):
         event = customerEvent(self.panel.GetId(), self.EVENT_CUSTOMER, [function, data])
         self.GetEventHandler().AddPendingEvent(event)
 
     def onCustomerEvent(self, event):
         #print 'onCustomerEvent'
-        data = event.data
-        function = data[0]
-        del data[0]        
+        datas = event.data
+        function = datas[0]
+        data = datas[1]    
         function(*data)
+        pass
+    
+    def startTask(self, function, data = None):
+        thread = taskThread(function, data)
+        thread.start()
         pass
 
     def setFramePosition(self, height):
