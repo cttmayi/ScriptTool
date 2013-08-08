@@ -55,6 +55,6 @@ class tab(wx.Notebook):
         return wgt
         pass
     
-    def destrop(self):
+    def destroy(self):
         self.Destroy()
     

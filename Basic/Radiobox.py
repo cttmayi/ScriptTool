@@ -22,5 +22,5 @@ class radiobox(wx.RadioBox):
     def onSelChange(self, event):
         self.callback()
     
-    def destrop(self):
+    def destroy(self):
         self.Destroy()

@@ -69,6 +69,6 @@ class table(wx.ListCtrl):
             self.rclick_cbk()
         event.Skip()
     
-    def destrop(self):
+    def destroy(self):
         self.Destroy()    
     
