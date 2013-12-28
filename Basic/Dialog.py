@@ -9,6 +9,8 @@ class dialog(wx.Dialog):
     
     def __init__(self, parent, title, width = 10):
 
+        self.panel = parent
+
         pre = wx.PreDialog()
         pre.SetExtraStyle(wx.DIALOG_EX_CONTEXTHELP)
         pre.Create(parent, -1, title, wx.DefaultPosition, wx.DefaultSize, wx.DEFAULT_DIALOG_STYLE)
@@ -51,10 +53,10 @@ class dialog(wx.Dialog):
         
         return text
     
-    def createButton(self, text, cbk = None):
+    def createButton(self, text, cbk = None, arg = None):
         box = wx.BoxSizer(wx.HORIZONTAL)
 
-        btn = button(self, text, (0, 0), (self.width, -1), cbk)
+        btn = button(self, text, (0, 0), (self.width, -1), cbk, arg)
         box.Add(btn, 1, wx.ALIGN_CENTRE|wx.ALL, 5)
 
         #self.sizer.Add(box, 0, wx.GROW|wx.ALIGN_CENTER_VERTICAL|wx.ALL, 5)

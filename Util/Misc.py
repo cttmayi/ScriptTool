@@ -20,25 +20,35 @@ class misc():
     def setFrame(self, frame):
         self.frame = frame
     
-    def __openFileBrowse(self):
+    def __openFileBrowse(self, defaultPath):
         #print 'browse'
-        v = self.frame.doFileDialog('C:/', '*.*')
+        if defaultPath == None:
+            defaultPath = 'C:\\'
+        
+        v = self.frame.doFileDialog(defaultPath, '*.exe')
         if v != None:
             self.__openFileEdit.setText(v)
 
 
-    def openFile(self, ofile, ext, para = None):
+    def openFile(self, ofile, ext, para = None, defaultPaths = None):
         inst = uedit.getInstance()
         ret = inst.openFile(ofile, ext, para)
+
         if (ret == None):
             dlg = self.frame.createDialog('Choose', 35 + len(ext))
             dlg.createStatic('choose executer to open ' + ext + ' file')
             self.__openFileEdit = dlg.createEdit('Path')
-            dlg.createButton('Browse', self.__openFileBrowse)
+            defaultPath = None
+            if defaultPaths != None:
+                for path in defaultPaths:
+                    if os.path.isfile(path):
+                        defaultPath = path
+                        self.__openFileEdit.setText(path)
+            dlg.createButton('Browse', self.__openFileBrowse, defaultPath)
             dlg.createOkCancel()
             if dlg.show() == True:
                 inst.setEditCfg(ext, self.__openFileEdit.getText())
-                ret = self.openFile(ofile, ext, para)
+                ret = self.openFile(ofile, ext, para, defaultPaths)
             dlg.destroy()
         
         if ret == None:

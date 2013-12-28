@@ -193,7 +193,8 @@ class mainFrame(wx.Frame):
 #                try:
                 dyn = dynLoad(tabFolder+'.'+name,['*'])
                 ins = dyn.getClassInstance('tabFrame', notebook, self)
-                ins.performCreate()
+                ins.performConfig()
+                #ins.performCreate()
                 if ins.tabName == None:
                     ins.tabName = name
                 notebook.AddPage(ins, ins.tabName)
@@ -203,7 +204,7 @@ class mainFrame(wx.Frame):
 #                   ins.Destroy()
 #                   print 'Tab(' + name + ') error.'
 #                   print e
-        
+        notebook.GetPage(0).performCreateIfNeed()
         notebook.GetPage(0).performResume(None)
         notebook.SetSelection(0)
         
@@ -240,6 +241,7 @@ class mainFrame(wx.Frame):
             old_page = new_page
         
         old_page.performPause(event)
+        new_page.performCreateIfNeed()
         new_page.performResume(event)
         old_page.performStop(event)
         

@@ -16,7 +16,10 @@ class button(wx.Button):
             self.click_cbk()
         else:
             self.click_cbk(self.arg)
-        self.panel.updateUI()
+        try:
+            self.panel.updateUI()
+        except:
+            pass
         event.Skip()
     
     def reset(self, name, cbk = None):

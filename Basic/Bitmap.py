@@ -14,6 +14,9 @@ class bitmap(wx.StaticBitmap):
         
         self.bmpH = 0
         self.bmpW = 0
+        
+        self.__fgLeftSliding = False
+        
     
     def setBitmap(self, path, w = 0, h = 0):
         if self.widget != None:
@@ -74,21 +77,49 @@ class bitmap(wx.StaticBitmap):
         self.widget.Refresh()
         
     def setLeftClickAction(self, cbk):
-        self.widget.Bind(wx.EVT_LEFT_DOWN, self.__onLeftClickAction)
+        self.widget.Bind(wx.EVT_LEFT_DOWN, self.__onLeftClick)
         self.__leftClickCbk = cbk
         #self.parent.setLeftClickAction(self.realX, self.realY, self.realW, self.realH, cbk)
         
-    def __onLeftClickAction(self, event):
+    def __onLeftClick(self, event):
         x = event.GetX()
         y = event.GetY()
-        
         x = x * self.bmpW / self.realW
         y = y * self.bmpH / self.realH
+        
         if self.__leftClickCbk.func_code.co_argcount == 1:
             self.__leftClickCbk()
         else:
             self.__leftClickCbk(x, y)
-        
+    
+    def setLeftSlideAction(self, cbk):
+        self.widget.Bind(wx.EVT_LEFT_DOWN, self.__onLeftSlideDown)
+        self.widget.Bind(wx.EVT_LEFT_UP, self.__onLeftSlideUp)
+        self.__leftClickUpCbk = cbk
+    
+    def __onLeftSlideDown(self, event):
+        x = event.GetX()
+        y = event.GetY()
+        x = x * self.bmpW / self.realW
+        y = y * self.bmpH / self.realH
+
+        self.__leftSlideDwonPointX = x
+        self.__leftSlideDwonPointY = y
+        self.__fgLeftSliding = True
+    
+    def __onLeftSlideUp(self, event):
+        if self.__fgLeftSliding == True:
+            x = event.GetX()
+            y = event.GetY()
+            x = x * self.bmpW / self.realW
+            y = y * self.bmpH / self.realH
+    
+            if self.__leftClickUpCbk.func_code.co_argcount == 1:
+                self.__leftClickUpCbk()
+            else:
+                self.__leftClickUpCbk(self.__leftSlideDwonPointX, self.__leftSlideDwonPointY, x, y)
+        self.__fgLeftSliding = False
+    
     def getBitmapSize(self):
         return [self.bmpW, self.bmpH]
     

@@ -25,13 +25,18 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
         self.__TEXT_H = g.uiTextHeight
         self.__TEXT_W = g.uiTextWidth
 
-    def performCreate(self):
-        self.onCreate()
-        self.isCreated = True
-        self.Bind(wx.EVT_CONTEXT_MENU, self.__onRClickAction)
-        #self.SetVirtualSize((self.maxWidth, self.maxHeight))
-        self.SetVirtualSize((self.maxWidth, 0))
-        self.SetScrollRate(20, 20)        
+
+    def performConfig(self):
+        self.onConfig()
+
+    def performCreateIfNeed(self):
+        if self.isCreated == False:
+            self.onCreate()
+            self.isCreated = True
+            self.Bind(wx.EVT_CONTEXT_MENU, self.__onRClickAction)
+            #self.SetVirtualSize((self.maxWidth, self.maxHeight))
+            self.SetVirtualSize((self.maxWidth, 0))
+            self.SetScrollRate(20, 20)        
 
     def __onRClickAction(self, event):
         event.Skip()
@@ -84,6 +89,9 @@ class tabPanel(wx.ScrolledWindow, Basic.Panel.panel):
     
     def performStop(self, event):
         self.onStop()
+        
+    def onConfig(self):
+        pass
         
     def onCreate(self):
         pass

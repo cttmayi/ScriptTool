@@ -309,6 +309,18 @@ class util():
 			ret = None
 		return ret
 
+	@staticmethod			
+	def getCurPath():
+		return os.getcwd() + '\\'
+	
+	@staticmethod		
+	def getToolPath():
+		return os.getcwd() + '\\Tool\\'
+	
+	@staticmethod			
+	def getTempPath():
+		return os.getcwd() + '\\Temp\\'
+
 
 class dynLoad():
 	def __init__(self,package,imp_list):
@@ -436,6 +448,8 @@ class cmdThread(threading.Thread):
 				evt.setData([self.fun_finish, string])
 				#evt.setThread(self)
 				self.panel.GetEventHandler().AddPendingEvent(evt)
+				
+
 
 class runWaitThread(threading.Thread):
 	def __init__(self, cmd):

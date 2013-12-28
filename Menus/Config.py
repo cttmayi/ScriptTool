@@ -8,13 +8,13 @@ class menuFrame(menu):
     
     def onCreate(self):
         self.menuName = 'Config'
-         
+
         inst = uedit.getInstance()
         self.uedit = inst.listEditCfg()
-        print self.uedit
+        #print self.uedit
         if (self.uedit != None):
             self.createSubMenu('uedit', self.uedit, self.onCfgUedit)        
-        
+
         self.tools = util.listDir('Tool', False)
         if (self.tools != None):
             self.createSubMenu('tool', self.tools, self.onCfgTool)

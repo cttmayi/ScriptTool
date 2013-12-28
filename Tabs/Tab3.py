@@ -7,9 +7,10 @@ import os
 
 class tabFrame(tabPanel):
 	
-	def onCreate(self):
-		
+	def onConfig(self):
 		self.tabName = 'Appiot'
+	
+	def onCreate(self):
 		
 		self.line = 0
 		self.createStaticBox('systrace',3, self.line, 80, 2)

@@ -9,12 +9,13 @@ from Util.Misc import misc
 from Function.TraceView import traceView
 
 class tabFrame(tabPanel):
-    tree = None
+
+    def onConfig(self):
+        self.tabName = 'DEMO'
 
     def onCreate(self):
-        self.tabName = 'DEMO'
         #colors = ["red", "blue", "gray", "yellow", "green"]
-        self.SetBackgroundColour("gray")
+        #self.SetBackgroundColour("gray")
         
         self.createStatic("Name:", 1, 1)
         self.createStatic("Name:", 2, 2)
@@ -81,6 +82,7 @@ class tabFrame(tabPanel):
         button.setEnable(True)
         self.text = self.createEdit(-1, 2, 50, 10)
         self.text.setEnterAction(self.onEditEnter)
+        self.text.setFilter('1234567890')
         
         #self.createGauge(-1, 2, 10)
         
@@ -88,7 +90,7 @@ class tabFrame(tabPanel):
         self.sel.setSel(1)
         
         self.bmp = self.createBitmap(5,20,20,10)
-        self.bmp.setBitmap('d:\\1.jpg')
+        self.bmp.setBitmap('Tabs\\th.jpg')
         self.bmp.setLeftClickAction(self.onBitmapCbk)
         
         self.popupA = self.createPopupMenu('P')
@@ -129,9 +131,10 @@ class tabFrame(tabPanel):
         m = t.addTable('Table', ['A','B'])
         
         self.bmp2 = t.addBitmap('bitmap')
-        self.bmp2.setBitmap('d:\\1.jpg')
+        self.bmp2.setBitmap(util.getCurPath() + 'Tabs\\th.jpg')
         t.setSel(1)
         
+        self.bmp2.setLeftSlideAction(self.onBmpSlide)
         
         
         
@@ -325,7 +328,7 @@ class tabFrame(tabPanel):
 
     def onOpenFile(self):
         inst = misc.getInstance()
-        inst.openFile('D:\\1.jpg', 'jpg')
+        inst.openFile(util.getCurPath() + 'Tabs\\th.jpg', 'jpg', None, ['C:\WINDOWS\system32\mspaint.exe'])
 
     def OnCmdCbk(self, string):
         #self.panel.SetTitle("Click Count: %s" % event.GetClickCount())
@@ -370,6 +373,10 @@ class tabFrame(tabPanel):
         r.show()
         
         pass
+    
+    def onBmpSlide(self, x, y, x2, y2):
+        print x, y, x2, y2
+    
     
     def btnReset(self):
         self.btnSet.reset('Set')
